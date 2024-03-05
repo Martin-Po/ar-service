@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import Footer from './components/Footer';
 import { Hero_2 } from './components/Hero_2';
 import { Banner } from './components/Banner';
+import { Marcas } from './components/Marcas';
 
 
 function App() {
@@ -13,6 +14,9 @@ function App() {
             <CssBaseline />
             <AppBar/>
             <Hero_2/>
+            <Banner/>
+            <Marcas/>
+
             
             <Grid
                 container
@@ -35,7 +39,6 @@ function App() {
                 }}
             >
 
-              <Banner/>
 
               </Grid>
 

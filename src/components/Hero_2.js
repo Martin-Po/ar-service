@@ -1,17 +1,13 @@
-import { Box, Button, Grid, Typography } from '@mui/material'
-import HeroImage from '../assets/hero_image.png'
+import { Button, Grid, Typography } from '@mui/material'
 import Background from '../assets/hero_background_darken.png'
 
 const Hero_2 = () => {
     return (
-        <div style={{ width: '100vw', maxWidth: '100%', height: '100vh' }}>
-            {/* Background container */}
             <div
                 style={{
+                    width: '100vw', maxWidth: '100%', height: '100vh',
                     position: 'relative',
                     left: 0,
-                    height: '100%',
-                    width: '100%', // Set width to 100% of viewport width
                     backgroundImage: `url(${Background})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
@@ -36,6 +32,7 @@ const Hero_2 = () => {
                         },
                         '@media (max-width:1024px)': {
                             width: '100%',
+                            alignItems:'baseline'                            
                         },
                     }}
                 >
@@ -54,6 +51,8 @@ const Hero_2 = () => {
                                 margin: '2rem',
                                 '@media (max-width:600px)': {
                                     fontSize: '2rem',
+                                    margin:'0',
+                                    paddingTop:'1.25rem'
                                 },
                             }}
                         >
@@ -150,7 +149,6 @@ const Hero_2 = () => {
                     </Grid>
                 </Grid>
             </div>
-        </div>
     )
 }
 
