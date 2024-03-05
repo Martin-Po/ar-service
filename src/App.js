@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import { Hero_2 } from './components/Hero_2';
 import { Banner } from './components/Banner';
 import { Marcas } from './components/Marcas';
+import { Testimonios } from './components/Testimonios';
 
 
 function App() {
@@ -16,31 +17,10 @@ function App() {
             <Hero_2/>
             <Banner/>
             <Marcas/>
+            <Testimonios/>
 
             
-            <Grid
-                container
-                
-                sx={{
-                  margin: '50px auto 0 auto',
-                  width: '1280px',
-                  display: 'flex',
-                  justifyContent: 'space-evenly',
-                  alignItems: 'center',
-                  paddingLeft: '1.5rem',
-                  paddingRight: '1.5rem',
-                  
-                  "@media (max-width: 1300px)": {
-                    width: '992px',
-
-                  }, '@media (max-width:1024px)': {
-                    width: '100%',
-                }, 
-                }}
-            >
-
-
-              </Grid>
+    
 
               <Footer />
 

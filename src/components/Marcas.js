@@ -148,6 +148,7 @@ const Marcas = () => {
                         </Typography>
                 {Marcas.map(marca => { return (
                     <img
+                    key={marca.id}
                     style={{
                         margin:'0.25rem',
                         maxWidth: '100%',
