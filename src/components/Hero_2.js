@@ -20,6 +20,7 @@ const Hero_2 = () => {
                     direction="column"
                     sx={{
                         display: 'flex',
+                        alignContent:'center',
                         width: '1280px',
                         '@media (max-width: 1300px)': {
                             width: '992px',
@@ -86,6 +87,7 @@ const Hero_2 = () => {
                         item
                         xs={1}
                         sx={{
+                            width:'100%',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
@@ -125,6 +127,7 @@ const Hero_2 = () => {
                         item
                         xs={2}
                         sx={{
+                            width:'100%',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
