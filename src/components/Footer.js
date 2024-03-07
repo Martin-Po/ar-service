@@ -18,7 +18,7 @@ function Footer() {
 
                 }}
             >
-                {/* Content Goes Here */}
+               
             </Box>
             
             <Box
