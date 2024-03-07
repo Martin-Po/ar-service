@@ -28,9 +28,10 @@ const Banner = () => {
                 <Grid
                     item
                     xs={12}
-                    sm={6}
+                    lg={6}
                     sx={{
-                        display: 'flex',
+                        display: { xs: 'none', lg: 'flex' },
+
                         flexDirection: 'column',
                         alignItems: 'center',
                         marginBottom: '20px',
@@ -54,7 +55,7 @@ const Banner = () => {
                 <Grid
                     item
                     xs={12}
-                    sm={6}
+                    lg={6}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
