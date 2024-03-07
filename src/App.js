@@ -7,6 +7,7 @@ import { Hero_2 } from './components/Hero_2';
 import { Banner } from './components/Banner';
 import { Marcas } from './components/Marcas';
 import { Testimonios } from './components/Testimonios';
+import { Encontranos } from './components/Encontranos';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Banner/>
             <Marcas/>
             <Testimonios/>
+            <Encontranos/>
 
             
     

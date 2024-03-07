@@ -90,7 +90,8 @@ const Testimonios = () => {
                         display: 'flex',
                         flexDirection: 'row',
                         marginBottom: '20px',
-                        '@media (max-width:500px)': {
+
+                        '@media (max-width:800px)': {
                             flexDirection: 'column',
                         },
                     }}
@@ -113,6 +114,7 @@ const Testimonios = () => {
                             >
                                 <Paper
                                     sx={{
+                                        
                                         padding: '1rem',
                                         margin: '10px',
                                         borderRadius: '30px',
@@ -131,6 +133,7 @@ const Testimonios = () => {
                                             display:'flex',
                                             alignItems: 'center',
                                             flexDirection: 'column',
+                                            flexWrap:'nowrap',
                                         }}
                                     >
                                         <Grid
@@ -170,7 +173,7 @@ const Testimonios = () => {
                                             style={{ flexGrow: 1 }}
                                             sx={{
                                                 display: 'flex',
-                                                justifyContent:'space-around',
+                                                justifyContent:'space-between',
                                                 flexDirection: 'column',                                               
                                                 
                                                 '@media (max-width:500px)': {
@@ -180,7 +183,7 @@ const Testimonios = () => {
                                         >
                                             <Typography
                                                 sx={{
-                                                    fontSize: '0.85rem',
+                                                   
                                                 }}
                                             >
                                                 {testimonio.text}
