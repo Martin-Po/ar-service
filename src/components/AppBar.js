@@ -110,10 +110,10 @@ function ResponsiveAppBar() {
                                             color: 'inherit',
                                         }}
                                         className="menu-link"
+                                        onClick={handleCloseNavMenu}
                                     >
                                 <MenuItem
                                     key={page}
-                                    onClick={handleCloseNavMenu}
                                 >
                                         <Typography
                                             onClick={handleCloseNavMenu}
