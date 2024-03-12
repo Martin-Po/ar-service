@@ -5,11 +5,13 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from './Theme'
-
+import { BrowserRouter as Router } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <ThemeProvider theme={theme}>
-        <App  />
-    </ThemeProvider>
+    <Router>
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
+    </Router>
 )
 reportWebVitals()

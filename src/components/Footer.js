@@ -1,27 +1,34 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { RedSocial } from './Contactos'
+import { Link } from 'react-router-dom'
+
 
 
 const Navegacion = [
     {
         id: 1,
         text: 'Inicio',
+        link: '/inicio'
     },
     {
         id: 2,
         text: 'Tienda',
+        link: '/tienda'
     },
     {
         id: 3,
         text: 'Contacto',
+        link: '/contacto'
     },
     {
         id: 4,
         text: 'Quienes somos',
+        link: '/nosotros'
     },
     {
         id: 5,
         text: 'Preguntas frecuentes',
+        link: '/faqs'
     },
 ]
 
@@ -89,6 +96,7 @@ function Footer() {
 
                     {Navegacion.map((nav) => {
                         return (
+                            <Link to={nav.link}  style={{ display:'flex', width: 'fit-content', textDecoration: 'none', color:'inherit' }} className="menu-link">
                             <Typography
                                 sx={{
                                     fontSize: '0.85rem',
@@ -96,6 +104,7 @@ function Footer() {
                             >
                                 {nav.text}
                             </Typography>
+                            </Link>
                         )
                     })}
                 </Grid>
