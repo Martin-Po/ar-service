@@ -10,6 +10,7 @@ import { Encontranos } from './components/Encontranos'
 import { Route, Routes } from 'react-router-dom'
 import { Nosotros } from './components/Nosotros'
 import { FAQs } from './components/FAQs'
+import { Contactenos } from './components/Contactenos'
 
 function App() {
     const Home = () => {
@@ -19,6 +20,14 @@ function App() {
                 <Banner />
                 <Marcas />
                 <Testimonios />
+                <Encontranos />
+            </>
+        )
+    }
+    const ContactenosSite = () => {
+        return (
+            <>
+                <Contactenos />
                 <Encontranos />
             </>
         )
@@ -38,8 +47,9 @@ function App() {
             <CssBaseline />
             <AppBar />
             <Routes>
-                <Route path="/nosotros" element={<Nosotros />} />
-                <Route path="/faqs" element={<FAQs />} />
+                <Route path="/nosotros" element={<Nosotros/>} />
+                <Route path="/faqs" element={<FAQs/>} />
+                <Route path="/contactenos" element={<ContactenosSite/>} />
                 <Route path="/*" element={<Home />} />
             </Routes>
             <Footer />

@@ -24,8 +24,8 @@ const Navegacion = [
     },
     {
         id: 3,
-        text: 'Contacto',
-        link: '/contacto',
+        text: 'Contactenos',
+        link: '/Contactenos',
     },
     {
         id: 4,
