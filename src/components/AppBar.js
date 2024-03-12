@@ -103,13 +103,14 @@ function ResponsiveAppBar() {
                                 <MenuItem
                                     key={page}
                                     onClick={handleCloseNavMenu}
+                                    sx={{paddingRight:0}}
                                 >
                                     <Link
                                         key={page}
                                         to={page.link}
                                         style={{
                                             display: 'flex',
-                                            width: 'fit-content',
+                                            width: '100%',
                                             textDecoration: 'none',
                                             color: 'inherit',
                                         }}
@@ -118,7 +119,7 @@ function ResponsiveAppBar() {
                                         <Typography
                                             onClick={handleCloseNavMenu}
                                             sx={{
-                                                fontSize: '0.85rem',
+                                                fontSize: '0.85rem',paddingRight:'16px'
                                             }}
                                         >
                                             {page.text}
