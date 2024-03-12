@@ -100,11 +100,6 @@ function ResponsiveAppBar() {
                         >
                             {Navegacion.map((page, index) => (
                                 <>
-                                <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{paddingRight:0}}
-                                >
                                     <Link
                                         key={page}
                                         to={page.link}
@@ -116,16 +111,20 @@ function ResponsiveAppBar() {
                                         }}
                                         className="menu-link"
                                     >
+                                <MenuItem
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                >
                                         <Typography
                                             onClick={handleCloseNavMenu}
                                             sx={{
-                                                fontSize: '0.85rem',paddingRight:'16px'
+                                                fontSize: '0.85rem',
                                             }}
                                         >
                                             {page.text}
                                         </Typography>
-                                    </Link>
                                 </MenuItem>
+                                    </Link>
                                     {
                                          (index !== Navegacion.length -1) &&
                                          <Divider style={{margin:'0px'}}  orientation="horizontal" variant="fullWidth" flexItem />
