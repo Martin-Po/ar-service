@@ -6,11 +6,12 @@ import { Hero_2 } from './components/Hero_2'
 import { Banner } from './components/Banner'
 import { Marcas } from './components/Marcas'
 import { Testimonios } from './components/Testimonios'
-import { Encontranos } from './components/Encontranos'
+import { Encontranos } from './components/EncontranosImg'
 import { Route, Routes } from 'react-router-dom'
 import { Nosotros } from './components/Nosotros'
 import { FAQs } from './components/FAQs'
 import { Contactenos } from './components/Contactenos'
+import { EncontranosMaps } from './components/EncontranosMaps'
 
 function App() {
     const Home = () => {
@@ -20,7 +21,7 @@ function App() {
                 <Banner />
                 <Marcas />
                 <Testimonios />
-                <Encontranos />
+                <EncontranosMaps/>
             </>
         )
     }
@@ -28,7 +29,8 @@ function App() {
         return (
             <>
                 <Contactenos />
-                <Encontranos />
+                <EncontranosMaps/>
+
             </>
         )
     }
