@@ -11,10 +11,6 @@ const Marcas = () => {
             id: 1,
             src: 'yamaha.png',
             text: 'yamaha',
-        },{
-            id: 2,
-            src: 'tannoy.png',
-            text: 'tannoy',
         },
         {
             id: 3,
@@ -24,7 +20,9 @@ const Marcas = () => {
             id: 4,
             src: 'sansui.png',
             text: 'sansui',
-        },{
+        },
+       
+        {
             id: 5,
             src: 'onkyo.png',
             text: 'onkyo',
@@ -40,14 +38,14 @@ const Marcas = () => {
             text: 'marantz',
         },
         {
-            id: 8,
-            src: 'polkaudio.png',
-            text: 'polkaudio',
-        },
-        {
             id: 9,
             src: 'bose.png',
             text: 'bose',
+        },
+        {
+            id: 16,
+            src: 'jvc.png',
+            text: 'jvc',
         },
         {
             id: 10,
@@ -55,9 +53,19 @@ const Marcas = () => {
             text: 'nakamichi',
         },
         {
+            id: 14,
+            src: 'akai.png',
+            text: 'akai',
+        },
+        {
             id: 11,
             src: 'tecnics.png',
             text: 'tecnics',
+        },
+        {
+            id: 15,
+            src: 'harman.png',
+            text: 'harman',
         },
         {
             id: 12,

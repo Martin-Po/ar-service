@@ -8,12 +8,12 @@ const Preguntas = [
     {
         id: 1,
         pregunta: '¿Qué equipos reparan?',
-        respuesta: 'Realizamos repacion de Trabajamos con amplificadores de audio HiFi, Bandejas giradiscos, Bafles, reamplificadores, Amplificadores integrados valvulares, Cassetteras '
+        respuesta: 'Realizamos repaciones de amplificadores de audio HiFi, Bandejas giradiscos, Bafles, Preamplificadores, Amplificadores integrados valvulares, Cassetteras, Sintonizadores y Radios, Ecualizadores, Potencias de sonido, Microondas, Televisores'
     },
     {
         id: 2,
         pregunta: '¿Qué no reparan?',
-        respuesta: 'Microondas, heladeras, televisores'
+        respuesta: 'Heladeras, Lavarropas, Hornos Electricos, Secadores de pelo'
     },   {
         id: 3,
         pregunta: '¿Venden accesorios?',
@@ -21,7 +21,7 @@ const Preguntas = [
     },
     {
         id: 4,
-        pregunta: '¿Trabajan por pedido',
+        pregunta: '¿Trabajan por pedido?',
         respuesta: 'No trabajamos por pedido, los equipos que tenemos disponibles son de los que disponemos'
     },   {
         id: 5,

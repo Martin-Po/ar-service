@@ -98,23 +98,20 @@ function ResponsiveAppBar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {Navegacion.map((page, index) => (
-                                <>
-                                    <Link
-                                        key={page}
-                                        to={page.link}
-                                        style={{
-                                            display: 'flex',
-                                            width: '100%',
-                                            textDecoration: 'none',
-                                            color: 'inherit',
-                                        }}
-                                        className="menu-link"
-                                        onClick={handleCloseNavMenu}
-                                    >
-                                <MenuItem
-                                    key={page}
+                            {Navegacion.map((page, index) => [
+                                <Link
+                                    key={page.link}
+                                    to={page.link}
+                                    style={{
+                                        display: 'flex',
+                                        width: '100%',
+                                        textDecoration: 'none',
+                                        color: 'inherit',
+                                    }}
+                                    className="menu-link"
+                                    onClick={handleCloseNavMenu}
                                 >
+                                    <MenuItem key={page}>
                                         <Typography
                                             onClick={handleCloseNavMenu}
                                             sx={{
@@ -123,15 +120,17 @@ function ResponsiveAppBar() {
                                         >
                                             {page.text}
                                         </Typography>
-                                </MenuItem>
-                                    </Link>
-                                    {
-                                         (index !== Navegacion.length -1) &&
-                                         <Divider style={{margin:'0px'}}  orientation="horizontal" variant="fullWidth" flexItem />
-                                     
-                                    }
-                                </>
-                            ))}
+                                    </MenuItem>
+                                </Link>,
+                                index !== Navegacion.length - 1 && (
+                                    <Divider
+                                        style={{ margin: '0px' }}
+                                        orientation="horizontal"
+                                        variant="fullWidth"
+                                        flexItem
+                                    />
+                                ),
+                            ])}
                         </Menu>
                     </Box>
 
@@ -140,48 +139,44 @@ function ResponsiveAppBar() {
                             flexGrow: 1,
                             display: { xs: 'none', md: 'flex' },
                             justifyContent: 'flex-end',
-                            marginLeft:'auto',
-                            marginRight:'auto'
-                            
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
                         }}
                     >
-                        {Navegacion.map((page, index) => 
-                            {
-                                return (
-                                    <>
-                                    <Link
-                                        key={page}
-                                        to={page.link}
-                                        style={{
-                                            display: 'flex',
-                                            width: 'fit-content',
-                                            textDecoration: 'none',
-                                            color: 'inherit',
+                        {Navegacion.map((page) => (
+                            <React.Fragment key={page.id}>
+                                <Link
+                                    to={page.link}
+                                    style={{
+                                        display: 'flex',
+                                        width: 'fit-content',
+                                        textDecoration: 'none',
+                                        color: 'inherit',
+                                    }}
+                                    className="menu-link"
+                                >
+                                    <Typography
+                                        onClick={handleCloseNavMenu}
+                                        sx={{
+                                            fontSize: '1.15rem',
+                                            paddingLeft: '0.5rem',
+                                            paddingRight: '0.5rem',
                                         }}
-                                        className="menu-link"
                                     >
-                                        <Typography
-                                            onClick={handleCloseNavMenu}
-                                            sx={{
-                                                fontSize: '1.15rem', paddingLeft:'0.5rem', paddingRight:'0.5rem'
-                                            }}
-                                        >
-                                            {page.text}
-                                        </Typography>
-                                    </Link>
-                                    {                                    
-                                    (index !== Navegacion.length -1) &&
-                                        <Divider sx={{ borderLeftWidth: 1 }} orientation="vertical" variant="middle" flexItem />
-                                    }
-                                    </>
-
-
-                                )
-                                
-                            }
-                            
-                            
-                        )}
+                                        {page.text}
+                                    </Typography>
+                                </Link>
+                                {page.id !==
+                                    Navegacion[Navegacion.length - 1].id && (
+                                    <Divider
+                                        sx={{ borderLeftWidth: 1 }}
+                                        orientation="vertical"
+                                        variant="middle"
+                                        flexItem
+                                    />
+                                )}
+                            </React.Fragment>
+                        ))}
                     </Box>
                 </Toolbar>
             </Container>

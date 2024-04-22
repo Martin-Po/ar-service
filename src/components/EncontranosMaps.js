@@ -49,7 +49,7 @@ const EncontranosMaps = () => {
                         },
                     }}
                 >
-                    Encontranos en Paraguay 5101, Palermo
+                    Encontranos en Paraguay 5101 esquina Humboldt, Palermo
                 </Typography>
             </Box>
             <Box
@@ -71,9 +71,9 @@ const EncontranosMaps = () => {
     width="10000vw"
     height="450"
     style={{ border: 0 }}
-    allowfullscreen=""
+    allowFullScreen=""
     loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
+    referrerPolicy="no-referrer-when-downgrade"
 ></iframe>
                    
                 </div>

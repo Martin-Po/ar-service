@@ -49,7 +49,7 @@ const Horarios = [
     {
         id: 6,
         dia: 'Sábado',
-        Horario: ['10:00 - 14:00'],
+        Horario: ['11:00 - 14:00'],
     },
     {
         id: 7,
