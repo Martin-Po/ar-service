@@ -13,17 +13,16 @@ import { FAQs } from './components/FAQs'
 import { Contactenos } from './components/Contactenos'
 import { EncontranosMaps } from './components/EncontranosMaps'
 import LoginForm from './components/LoginForm'
-import { Adminhome } from './components/AdminHome'
+import { Adminhome } from './components/admin/AdminHome'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeLoggedUser } from './reducers/loginuserReducer'
 import { useEffect, useState } from 'react'
 import productosService from './services/productos'
 import loginService from './services/login'
 import { initializeProductos, setProductos } from './reducers/productosReducer'
-import { NuevoProducto } from './components/NuevoProducto'
+import { NuevoProducto } from './components/admin/NuevoProducto'
 import { CheckUser } from './reducers/loginuserReducer'
 import { PrivateRoutes } from './components/PrivateRoutes'
-
 
 
 
@@ -33,6 +32,31 @@ function App() {
 
     const loggeduser = useSelector((state) => state.loggeduser)
     const productos = useSelector((state) => state.productos)
+
+   
+
+    // const PrivateRoutes = () => {
+    //     const [authorized, setAuthorized] = useState(true);
+      
+    //       // Función para ejecutar fetchUser solo una vez por renderización
+    //       const fetchUserOnce = async () => {
+    //         try {
+    //             console.log('esta entrando');
+    //           await loginService.checkUser();
+    //           setAuthorized(true);
+    //         } catch (error) {
+    //           setAuthorized(false);
+    //         }
+    //       };
+      
+      
+    //     console.log('final');
+    //     console.log(authorized);
+    //     console.log('final3');
+      
+      
+    //     return authorized ? <Outlet /> : <Navigate to="/login" />;
+    //   };
 
 
     const [loaded, setloaded] = useState(false)
@@ -106,7 +130,7 @@ function App() {
                 <Route path="/login" element={<LoginForm />}/>
                 <Route element={<PrivateRoutes />}>
                     <Route path="/admin/home" element={<Adminhome />}/>
-                    <Route path="/admin/nuevo-producto" element={<NuevoProducto />}/>
+                    <Route path="/admin/nuevo-producto" element={<NuevoProducto key={`component-${Date.now()}-${Math.random()}`} />} />
                 </Route>
                 <Route path="/*" element={<Home />}/>
             </Routes>

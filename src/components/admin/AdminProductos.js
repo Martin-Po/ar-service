@@ -1,5 +1,4 @@
 import { Avatar, Box, Button, Grid, Paper, Typography } from '@mui/material'
-import BannerImage from '../assets/banner_image.png'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TableContainer from '@mui/material/TableContainer'
@@ -12,15 +11,17 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom'
 
 const Row = ({ producto }) => {
     const [open, setOpen] = React.useState(false)
 
     return (
         <React.Fragment>
-            <TableRow key = {producto.id} sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableRow
+                key={producto.id}
+                sx={{ '& > *': { borderBottom: 'unset' } }}
+            >
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -57,47 +58,50 @@ const Row = ({ producto }) => {
                 >
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{}}>
-                        {producto.caracteristicas && (
-
-                            <Box sx={{ margin: 1, width: '30%' }}>
-                                <Typography
-                                    variant="h6"
-                                    gutterBottom
-                                    component="div"
-                                >
-                                    Caracteristicas
-                                </Typography>
-                                <Table size="small" aria-label="purchases">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Descripcion</TableCell>
-                                            <TableCell align="right">
-                                                Valor
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {producto.caracteristicas.map(
-                                            (caracteristica) => (
-                                                <TableRow
-                                                    key={caracteristica.id}
-                                                >
-                                                    <TableCell component="th">
-                                                        {
-                                                            caracteristica
-                                                                .caracteristica
-                                                                .name
-                                                        }
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        {caracteristica.valor}
-                                                    </TableCell>
-                                                </TableRow>
-                                            )
-                                        )}
-                                    </TableBody>
-                                </Table>
-                            </Box>
+                            {producto.caracteristicas && (
+                                <Box sx={{ margin: 1, width: '30%' }}>
+                                    <Typography
+                                        variant="h6"
+                                        gutterBottom
+                                        component="div"
+                                    >
+                                        Caracteristicas
+                                    </Typography>
+                                    <Table size="small" aria-label="purchases">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>
+                                                    Descripcion
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    Valor
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {producto.caracteristicas.map(
+                                                (caracteristica) => (
+                                                    <TableRow
+                                                        key={caracteristica.id}
+                                                    >
+                                                        <TableCell component="th">
+                                                            {
+                                                                caracteristica
+                                                                    .caracteristica
+                                                                    .name
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell align="right">
+                                                            {
+                                                                caracteristica.valor
+                                                            }
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </Box>
                             )}
 
                             {producto.observaciones && (
@@ -123,7 +127,9 @@ const Row = ({ producto }) => {
                                         <TableBody>
                                             {producto.observaciones.map(
                                                 (observacion) => (
-                                                    <TableRow key={observacion._id}>
+                                                    <TableRow
+                                                        key={observacion._id}
+                                                    >
                                                         <TableCell component="th">
                                                             {
                                                                 observacion.observacion
@@ -170,12 +176,11 @@ const AdminProductos = () => {
     const productos = useSelector((state) => state.productos)
     const [open, setOpen] = React.useState(false)
 
-    const navigate = useNavigate();
-    
+    const navigate = useNavigate()
+
     const handleClick = async (event) => {
-          navigate('/admin/nuevo-producto');
-        
-      };
+        navigate('/admin/nuevo-producto')
+    }
 
     return (
         <Box
@@ -196,7 +201,8 @@ const AdminProductos = () => {
             }}
         >
             <Box sx={{ display: 'flex', flex: '1' }}>
-                <Button onClick={handleClick}
+                <Button
+                    onClick={handleClick}
                     sx={{
                         paddingBottom: '0.75rem',
                         marginLeft: '2rem',
@@ -231,9 +237,17 @@ const AdminProductos = () => {
                             <TableCell align="right">Descuento</TableCell>
                         </TableRow>
                     </TableHead>
-                    {productos && productos.map((producto) => {
-                        return <Row producto={producto} key={producto.id}/>
-                    })}
+                    <TableBody>
+                        {productos &&
+                            productos.map((producto) => {
+                                return (
+                                    <Row
+                                        producto={producto}
+                                        key={producto.id}
+                                    />
+                                )
+                            })}
+                    </TableBody>
                     <TableBody></TableBody>
                 </Table>
             </TableContainer>
