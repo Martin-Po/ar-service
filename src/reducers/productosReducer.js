@@ -50,10 +50,10 @@ export const initializeProductos = () => {
 export const createProducto = (productoObject) => {
     return async (dispatch) => {
         try {
-            console.log('en la carga');
-            console.log(productoObject);
-           const  newProducto = {name:productoObject}
-            const newProductoPopulated = await productoService.create(newProducto)
+            const subtipos = productoObject.subtipos.map(subtipo => subtipo.id)
+            const newproductoObject = { ...productoObject, subtipos: subtipos }
+
+            const newProductoPopulated = await productoService.create(newproductoObject)
             dispatch(appendProducto(newProductoPopulated))
         } catch (error) {
             console.error('Error creatin producto:', error)

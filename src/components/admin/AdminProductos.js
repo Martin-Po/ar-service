@@ -39,7 +39,14 @@ const Row = ({ producto }) => {
                     {producto.estado_activo.estado}
                 </TableCell>
                 <TableCell align="right">{producto.name}</TableCell>
-                <TableCell align="right">{producto.portada}</TableCell>
+                <TableCell align="right"><img
+                    style={{
+                        width: '3rem',
+                        height: '3rem'
+                    }}
+                    src={producto.portada}
+                    alt= {producto.marca + producto.modelo}
+                /></TableCell>
                 <TableCell align="right">{producto.marca}</TableCell>
                 <TableCell align="right">{producto.modelo}</TableCell>
                 <TableCell align="right">{producto.origen}</TableCell>

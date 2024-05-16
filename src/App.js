@@ -23,6 +23,7 @@ import { initializeProductos, setProductos } from './reducers/productosReducer'
 import { NuevoProducto } from './components/admin/NuevoProducto'
 import { CheckUser } from './reducers/loginuserReducer'
 import { PrivateRoutes } from './components/PrivateRoutes'
+import { NuevoProductoForm } from './components/admin/NuevoProductoForm'
 
 
 
@@ -130,7 +131,7 @@ function App() {
                 <Route path="/login" element={<LoginForm />}/>
                 <Route element={<PrivateRoutes />}>
                     <Route path="/admin/home" element={<Adminhome />}/>
-                    <Route path="/admin/nuevo-producto" element={<NuevoProducto key={`component-${Date.now()}-${Math.random()}`} />} />
+                    <Route path="/admin/nuevo-producto" element={<NuevoProductoForm key={`component-${Date.now()}-${Math.random()}`} />} />
                 </Route>
                 <Route path="/*" element={<Home />}/>
             </Routes>

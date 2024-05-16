@@ -13,10 +13,13 @@ const theme = createTheme({
     palette: {
       primary: {
         main: '#F3F4F6',
-        light: 'white'
+        light: 'white',
+        dark: 'rgba(0, 0, 0, 0.38)'
       },
       secondary: {
         main: '#B1DBED',
+
+        dark: '#1976d2'
       },
     },
     typography: {
