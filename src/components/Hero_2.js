@@ -60,7 +60,8 @@ const Hero_2 = () => {
                             },
                         }}
                     >
-                        Especialistas en Audio Vintage
+
+                      {process.env.NODE_ENV}
                     </Typography>
                 </Grid>
                 <Grid
