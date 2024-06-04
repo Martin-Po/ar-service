@@ -1,6 +1,8 @@
 import axios from 'axios'
-const baseUrl = '/api/caracteristicaXproducto'
-// const baseUrl = 'https://ar-service-api.vercel.app/api/caracteristicaXproducto'
+const baseUrl = process.env.NODE_ENV === 'production' 
+? 'https://ar-service-api.vercel.app/api/caracteristicaXproducto' 
+: '/api/caracteristicaXproducto'
+
 
 
 let token = null

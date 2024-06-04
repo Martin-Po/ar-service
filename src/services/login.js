@@ -1,6 +1,8 @@
 import axios from 'axios'
-const baseUrl = '/api/login'
-// const baseUrl = 'https://ar-service-api.vercel.app/api/login'
+
+const baseUrl = process.env.NODE_ENV === 'production' 
+? 'https://ar-service-api.vercel.app/api/login'
+: '/api/login'
 
 
 let token = null
