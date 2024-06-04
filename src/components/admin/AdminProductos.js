@@ -89,7 +89,7 @@ const Row = ({ producto }) => {
                                             {producto.caracteristicas.map(
                                                 (caracteristica) => (
                                                     <TableRow
-                                                        key={caracteristica.id}
+                                                        key={caracteristica._id}
                                                     >
                                                         <TableCell component="th">
                                                             {
@@ -250,7 +250,7 @@ const AdminProductos = () => {
                                 return (
                                     <Row
                                         producto={producto}
-                                        key={producto.id}
+                                        key={producto._id}
                                     />
                                 )
                             })}

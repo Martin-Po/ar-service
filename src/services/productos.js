@@ -1,6 +1,6 @@
 import axios from 'axios'
-// const baseUrl = '/api/productos'
-const baseUrl = 'https://ar-service-api.vercel.app/api/productos'
+const baseUrl = '/api/productos'
+// const baseUrl = 'https://ar-service-api.vercel.app/api/productos'
 
 
 let token = null
@@ -57,6 +57,14 @@ const getSubtipos = () => {
     return request.then(response => response.data)
 }
 
+const getCaracteristicas = () => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.get(`${baseUrl}/caracteristicas`, config)
+    return request.then(response => response.data)
+}
+
 const create = async newObject => {
     const config = {
         headers: { Authorization: token },
@@ -84,4 +92,4 @@ const remove = async (producto) => {
     return response.data
 }
 
-export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos}
+export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas}

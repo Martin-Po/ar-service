@@ -71,7 +71,7 @@ const Adminhome = () => {
                         </Box>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <AdminProductos />
+                        <AdminProductos  />
                     </AccordionDetails>
                 </Accordion>
             </Box>

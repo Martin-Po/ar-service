@@ -11,7 +11,7 @@ import Chip from '@mui/material/Chip'
 import { useDispatch } from 'react-redux'
 import { createProducto } from '../../reducers/productosReducer'
 
-const NuevoProducto = () => {
+const NuevoProducto = ({advanceStep}) => {
     const [marcasList, setMarcasList] = useState([])
     const [origenesList, setOrigenesList] = useState([])
     const [monedasList, setMonedasList] = useState([])
@@ -133,9 +133,14 @@ const NuevoProducto = () => {
 
     const handleClick = async (event) => {
         try {
-            dispatch(createProducto(productoNuevo))
-        } catch (exception) {}
-    }
+            await dispatch(createProducto(productoNuevo)).then(
+                advanceStep()
+            )
+            console.log('dispatch completed successfully');
+        } catch (exception) {
+            console.error('Error during dispatch:', exception);
+        }
+    };
 
 
 

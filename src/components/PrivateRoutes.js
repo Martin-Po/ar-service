@@ -22,11 +22,6 @@ const PrivateRoutes = () => {
       fetchUser();
     }, []);
 
-  console.log('final');
-  console.log(authorized);
-  console.log('final2');
-
-
   return authorized ? <Outlet /> : <Navigate to="/login" />;
 };
 

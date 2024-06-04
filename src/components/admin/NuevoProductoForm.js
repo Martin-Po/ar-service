@@ -1,6 +1,8 @@
 import { Avatar, Box, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { NuevoProducto } from './NuevoProducto'
+import { CaracteristicasForm } from './CaracteristicasForm';
+import CheckIcon from '@mui/icons-material/Check';
 
 const Steps = ({ selected, step, last, index }) => {
     return (
@@ -12,9 +14,9 @@ const Steps = ({ selected, step, last, index }) => {
                             width: '1.85rem', height: '1.85rem', 
 
                         },
-                        backgroundColor: selected
+                        backgroundColor: selected < index  ? 'primary.dark' : selected === index
                             ? 'secondary.dark'
-                            : 'primary.dark',
+                            : 'status.ok',
                     }}
                 >
                    <Box sx={{fontSize:'1.25rem',
@@ -22,7 +24,7 @@ const Steps = ({ selected, step, last, index }) => {
                                 fontSize: '0.65rem', // El texto se muestra en una sola línea
                             },}}>
 
-                        {index}
+                        {selected > index ?  <CheckIcon sx={{fontSize:'1.1.2rem'}}/> : index}
                    </Box>
                 </Avatar>
                 <Box>
@@ -68,6 +70,17 @@ const Steps = ({ selected, step, last, index }) => {
 
 const NuevoProductoForm = () => {
     const [selectedStep, setSelectedStep] = useState(0)
+    const [ProductoNuevo, setProductoNuevo] = useState({id: '6616c4209acac7cd24d10d57', name: '',
+    descripcion: '',})
+
+    console.log('se está renderizando devuelta');
+
+
+const advanceStep = () => {
+    console.log(selectedStep);
+    setSelectedStep(prevStep => prevStep + 1)
+    console.log(selectedStep);
+    }
 
     const pasos = [
         'Crear Producto',
@@ -91,7 +104,9 @@ const NuevoProductoForm = () => {
                 },
             }}
         >
-            <NuevoProducto />
+            {selectedStep === 0 &&  <NuevoProducto key = {1} advanceStep = {advanceStep}/>}
+            {selectedStep === 1 &&  <CaracteristicasForm NuevoProducto = {ProductoNuevo} />}
+            
 
             <Box sx={{ display: 'flex', alignItems: 'baseline', '@media (max-width:1024px)': {
                     marginLeft:'1rem',
@@ -101,7 +116,7 @@ const NuevoProductoForm = () => {
                 {pasos.map((paso, index) => {
                     return (
                         <Steps
-                            selected={selectedStep === index}
+                            selected={selectedStep + 1}
                             step={paso}
                             index={index + 1}
                             last={index === pasos.length - 1}

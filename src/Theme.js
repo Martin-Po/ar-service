@@ -21,6 +21,9 @@ const theme = createTheme({
 
         dark: '#1976d2'
       },
+      status: {
+        ok: '#4caf50'
+      }
     },
     typography: {
       "fontFamily": "Outfit, sans-serif",

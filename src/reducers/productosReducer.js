@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import productoService from '../services/productos'
+import caracteristicasService from '../services/caracteristicasxproducto'
+
 
 const productoSlice = createSlice({
     name: 'productos',
@@ -29,6 +31,20 @@ const productoSlice = createSlice({
                 return producto
             })
         },
+        addCaracteristica(state, action) {
+            const { producto_id, newCaracteristicas } = action.payload
+
+
+            return state.map((producto) => {
+                if (producto.id === producto_id) {
+                    return {
+                        ...producto,
+                        listelements: [...producto.caracteristicsa, newCaracteristicas],
+                    }
+                }
+                return producto
+            })
+        },
     },
 })
 
@@ -37,6 +53,7 @@ export const {
     setProductos,
     eraseProducto,
     changeProducto,
+    addCaracteristica
 } = productoSlice.actions
 
 export const initializeProductos = () => {
@@ -54,9 +71,11 @@ export const createProducto = (productoObject) => {
             const newproductoObject = { ...productoObject, subtipos: subtipos }
 
             const newProductoPopulated = await productoService.create(newproductoObject)
+            console.log('el producto se creo correctamente');
             dispatch(appendProducto(newProductoPopulated))
         } catch (error) {
-            console.error('Error creatin producto:', error)
+            console.error('Error creating producto:', error)
+            throw error
         }
     }
 }
@@ -82,6 +101,21 @@ export const deleteProductoById = (id) => {
         } catch (error) {
             // Handle error
             console.error('Error deleting producto:', error)
+        }
+    }
+}
+
+export const createCaracteristicas = (producto_id, caracteristica) => {
+    return async (dispatch) => {
+        try {
+            const newCaracteristicas = await caracteristicasService.create({
+                producto_id,
+                caracteristica,
+            })
+            dispatch(addCaracteristica({ producto_id, newCaracteristicas}))
+        } catch (error) {
+            // Handle error
+            console.error('Error al crear caracteristica:', error)
         }
     }
 }

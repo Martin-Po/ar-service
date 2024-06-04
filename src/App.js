@@ -19,6 +19,7 @@ import { initializeLoggedUser } from './reducers/loginuserReducer'
 import { useEffect, useState } from 'react'
 import productosService from './services/productos'
 import loginService from './services/login'
+import caracteristicasxproducto from './services/caracteristicasxproducto'
 import { initializeProductos, setProductos } from './reducers/productosReducer'
 import { NuevoProducto } from './components/admin/NuevoProducto'
 import { CheckUser } from './reducers/loginuserReducer'
@@ -72,6 +73,7 @@ function App() {
         if (!loggeduser.user){
             productosService.setToken(null);
             loginService.setToken(null);
+            caracteristicasxproducto.setToken(null);
             dispatch(setProductos(null))   
             console.log('borrando todo');
         }
@@ -79,6 +81,7 @@ function App() {
             console.log('seteando el token' + loggeduser.user.token);
             productosService.setToken(loggeduser.user.token);
             loginService.setToken(loggeduser.user.token);
+            caracteristicasxproducto.setToken(loggeduser.user.token);
             console.log('entro a la carga');
             dispatch(initializeProductos()).then(() => {
                 setloaded(true);
@@ -130,8 +133,8 @@ function App() {
                 <Route path="/contactenos" element={<ContactenosSite/>}/>
                 <Route path="/login" element={<LoginForm />}/>
                 <Route element={<PrivateRoutes />}>
-                    <Route path="/admin/home" element={<Adminhome />}/>
-                    <Route path="/admin/nuevo-producto" element={<NuevoProductoForm key={`component-${Date.now()}-${Math.random()}`} />} />
+                    <Route path="/admin/home" element={<Adminhome/>}/>
+                    <Route path="/admin/nuevo-producto" element={<NuevoProductoForm  />} />
                 </Route>
                 <Route path="/*" element={<Home />}/>
             </Routes>
