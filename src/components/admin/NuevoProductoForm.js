@@ -104,7 +104,7 @@ const advanceStep = () => {
                 },
             }}
         >
-            {selectedStep === 0 &&  <NuevoProducto key = {1} advanceStep = {advanceStep}/>}
+            {selectedStep === 0 &&  <NuevoProducto advanceStep = {advanceStep}/>}
             {selectedStep === 1 &&  <CaracteristicasForm NuevoProducto = {ProductoNuevo} />}
             
 
