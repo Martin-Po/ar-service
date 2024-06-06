@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { NuevoProducto } from './NuevoProducto'
 import { CaracteristicasForm } from './CaracteristicasForm';
 import CheckIcon from '@mui/icons-material/Check';
+import { ImagenesForm } from './ImagenesForm';
 
 const Steps = ({ selected, step, last, index }) => {
     return (
@@ -70,10 +71,14 @@ const Steps = ({ selected, step, last, index }) => {
 
 const NuevoProductoForm = () => {
     const [selectedStep, setSelectedStep] = useState(0)
-    const [ProductoNuevo, setProductoNuevo] = useState({id: '6616c4209acac7cd24d10d57', name: '',
+    const [ProductoNuevo, setProductoNuevo] = useState({id: '', name: '',
     descripcion: '',})
 
     console.log('se está renderizando devuelta');
+
+const changeProductoNuevo = (producto) => {
+    setProductoNuevo({id: producto.id, name: producto.name})
+        }    
 
 
 const advanceStep = () => {
@@ -104,8 +109,9 @@ const advanceStep = () => {
                 },
             }}
         >
-            {selectedStep === 0 &&  <NuevoProducto advanceStep = {advanceStep}/>}
-            {selectedStep === 1 &&  <CaracteristicasForm NuevoProducto = {ProductoNuevo} />}
+            {selectedStep === 0 &&  <NuevoProducto advanceStep = {advanceStep} changeProductoNuevo = {changeProductoNuevo}/>}
+            {selectedStep === 1 &&  <CaracteristicasForm advanceStep = {advanceStep} NuevoProducto = {ProductoNuevo} />}
+            {selectedStep === 2 &&  <ImagenesForm NuevoProducto = {ProductoNuevo} />}
             
 
             <Box sx={{ display: 'flex', alignItems: 'baseline', '@media (max-width:1024px)': {
@@ -116,6 +122,7 @@ const advanceStep = () => {
                 {pasos.map((paso, index) => {
                     return (
                         <Steps
+                            key={index}
                             selected={selectedStep + 1}
                             step={paso}
                             index={index + 1}

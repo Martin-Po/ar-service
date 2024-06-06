@@ -16,11 +16,13 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton'
 import { useDispatch } from 'react-redux'
 import { createCaracteristicas } from '../../reducers/productosReducer'
+import { useNavigate } from 'react-router-dom'
 
 
 
 
-const CaracteristicasForm = ({NuevoProducto}) => {
+
+const CaracteristicasForm = ({NuevoProducto, advanceStep}) => {
     const [caracteristicasList, setCaracteristicasList] = useState([])
     const [selectedCaracteristicas, setSelectedCaracteristicas] = useState({
         name: '',
@@ -93,10 +95,16 @@ const dispatch = useDispatch()
         setNewCaracteristicas(Caracteristicas)
     }
 
+    const navigate = useNavigate()
+
+
     const AgregarCaracteristicas = async (event) => {
     try {
-            dispatch(createCaracteristicas(NuevoProducto.id, newCaracteristicas))
-        } catch (exception) {}
+            await dispatch(createCaracteristicas(NuevoProducto.id, newCaracteristicas))
+            .then(advanceStep())
+        } catch (exception) {
+            console.log('dio error')
+        }
     }
     
 
@@ -279,7 +287,7 @@ const dispatch = useDispatch()
                             {newCaracteristicas &&
                                 newCaracteristicas.map((caracteristica) => {
                                     return (
-                                        <TableRow>
+                                        <TableRow key={caracteristica.id}>
                                             <TableCell>
                                                 {caracteristica.name}
                                             </TableCell>

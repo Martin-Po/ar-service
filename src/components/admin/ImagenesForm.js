@@ -2,7 +2,7 @@ import { Box, Button, Typography } from '@mui/material'
 
 import { createProducto } from '../../reducers/productosReducer'
 
-const NuevoProducto = () => {
+const ImagenesForm = () => {
    
 
     const handleImageChange = (event) => {
@@ -26,9 +26,47 @@ const NuevoProducto = () => {
                 justifyContent: 'center',
             }}
         >
-            
+            <Typography
+                sx={{
+                    margin: '1rem',
+
+                    display: 'flex',
+                    justifyContent: 'center',
+                    fontWeight: 'bold',
+                    fontSize: '2rem',
+
+                    '@media (max-width:600px)': { fontSize: '1.25rem' },
+                }}
+            >
+                IMÁGENES
+            </Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignContent: 'center',
+                    width: '1280px',
+                    height: 'fit-content',
+                    direction: 'column',
+                    flexDirection: 'column',
+                    marginBottom: '1.5rem',
+                    background: 'white',
+                    padding: '0.5rem',
+
+                    '@media (max-width: 1300px)': {
+                        width: '992px',
+                        paddingLeft: '1.5rem',
+                        paddingRight: '1.5rem',
+                        display: 'flex',
+                    },
+                    '@media (max-width:1024px)': {
+                        width: '100%',
+                        alignItems: 'baseline',
+                    },
+                }}
+            >
             <input type="file" name="image" onChange={handleImageChange} />
 
+            </Box>
             <Box sx={{ display: 'flex', flex: '1' }}>
                 <Button
                     onClick={handleClick}
@@ -50,11 +88,12 @@ const NuevoProducto = () => {
                     variant="contained"
                 >
                     {' '}
-                    CREAR PRODRUDCTO
+                    AGREGAR IMAGENES
                 </Button>
             </Box>
+
         </div>
     )
 }
 
-export { NuevoProducto }
+export { ImagenesForm }

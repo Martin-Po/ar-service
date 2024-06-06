@@ -33,13 +33,14 @@ const productoSlice = createSlice({
         },
         addCaracteristica(state, action) {
             const { producto_id, newCaracteristicas } = action.payload
-
+            console.log('en el dispatch');
+            console.log(newCaracteristicas);
 
             return state.map((producto) => {
                 if (producto.id === producto_id) {
                     return {
                         ...producto,
-                        listelements: [...producto.caracteristicsa, newCaracteristicas],
+                        caracteristicas: [...producto.caracteristicas, ...newCaracteristicas],
                     }
                 }
                 return producto
@@ -73,6 +74,7 @@ export const createProducto = (productoObject) => {
             const newProductoPopulated = await productoService.create(newproductoObject)
             console.log('el producto se creo correctamente');
             dispatch(appendProducto(newProductoPopulated))
+            return newProductoPopulated
         } catch (error) {
             console.error('Error creating producto:', error)
             throw error
@@ -116,6 +118,7 @@ export const createCaracteristicas = (producto_id, caracteristica) => {
         } catch (error) {
             // Handle error
             console.error('Error al crear caracteristica:', error)
+            throw error
         }
     }
 }
