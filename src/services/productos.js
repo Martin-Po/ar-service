@@ -85,6 +85,24 @@ const update = async (id, newObject) => {
     return response.data
 }
 
+const addPortada = async (producto_id, portada) => {
+    const formData = new FormData();
+    for (let i = 0; i < portada.length; i++) {
+    formData.append('portada', portada[i]);
+}
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`, // Ensure you have the correct token
+        },
+    };
+
+    console.log(formData);
+
+    const response = await axios.put(`${baseUrl}/${producto_id}/change-portada`, formData, config);
+    return response.data;
+}
+
 const remove = async (producto) => {
     const config = {
         headers: { Authorization: token },
@@ -94,4 +112,4 @@ const remove = async (producto) => {
     return response.data
 }
 
-export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas}
+export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas, addPortada}

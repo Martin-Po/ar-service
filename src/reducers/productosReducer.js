@@ -123,4 +123,24 @@ export const createCaracteristicas = (producto_id, caracteristica) => {
     }
 }
 
+export const AddPortada = (producto_id, portada) => {
+    return async (dispatch) => {
+        try {
+            console.log('en el reducer');
+            console.log(producto_id);
+            console.log(portada);
+            console.log('en el reducer2');
+
+            const newPortada = await productoService.addPortada(
+                producto_id,
+                portada)
+            // dispatch(addCaracteristica({ producto_id, newPortada}))
+        } catch (error) {
+            // Handle error
+            console.error('Error al crear portada:', error)
+            throw error
+        }
+    }
+}
+
 export default productoSlice.reducer

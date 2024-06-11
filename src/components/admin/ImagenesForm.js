@@ -1,19 +1,32 @@
 import { Box, Button, Typography } from '@mui/material'
 
-import { createProducto } from '../../reducers/productosReducer'
+import { AddPortada} from '../../reducers/productosReducer'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-const ImagenesForm = () => {
-   
+const ImagenesForm = ({NuevoProducto}) => {
+    const [portada, setPortada] = useState(null)
+    const [name, setName] = useState('')
+    const [status, setStatus] = useState('')
 
-    const handleImageChange = (event) => {
-   
-    };
+const dispatch = useDispatch()
 
-    const handleClick = async (event) => {
-       
+
+    const handleSubmit = async (event) => {
+        setStatus('') // Reset status
+        event.preventDefault()
+        const formData = new FormData()
+        formData.append('avatar', portada)
+        formData.append('name', name)
     }
 
-
+    const AgregarImagenes = async (event) => {
+        try {
+                await dispatch(AddPortada(NuevoProducto.id, portada))
+            } catch (exception) {
+                console.log('dio error')
+            }
+        }
 
     return (
         <div
@@ -64,12 +77,25 @@ const ImagenesForm = () => {
                     },
                 }}
             >
-            <input type="file" name="image" onChange={handleImageChange} />
 
+
+            <Box sx={{ display: 'flex', flex: '1' }}>
+                    <input
+                        type="file"
+                        multiple="multiple"
+                        onChange={(e) => setPortada(e.target.files)}
+                    />
+                    <input
+                        type="text"
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                    />
+                   
+            </Box>
             </Box>
             <Box sx={{ display: 'flex', flex: '1' }}>
                 <Button
-                    onClick={handleClick}
+                    onClick={AgregarImagenes}
                     sx={{
                         paddingBottom: '0.75rem',
                         marginLeft: '2rem',
@@ -88,10 +114,9 @@ const ImagenesForm = () => {
                     variant="contained"
                 >
                     {' '}
-                    AGREGAR IMAGENES
+                    CREAR PRODRUDCTO
                 </Button>
             </Box>
-
         </div>
     )
 }
