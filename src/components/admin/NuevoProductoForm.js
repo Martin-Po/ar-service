@@ -70,8 +70,8 @@ const Steps = ({ selected, step, last, index }) => {
 }
 
 const NuevoProductoForm = () => {
-    const [selectedStep, setSelectedStep] = useState(2)
-    const [ProductoNuevo, setProductoNuevo] = useState({id: '6616c4209acac7cd24d10d57', name: '',
+    const [selectedStep, setSelectedStep] = useState(0)
+    const [ProductoNuevo, setProductoNuevo] = useState({id: '', name: '',
     descripcion: '',})
 
     console.log('se está renderizando devuelta');
