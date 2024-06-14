@@ -46,6 +46,31 @@ const productoSlice = createSlice({
                 return producto
             })
         },
+        addPortada(state, action) {
+            const { producto_id, newPortada } = action.payload
+            return state.map((producto) => {
+                if (producto._id === producto_id) {
+                    return {
+                        ...producto,
+                        portada: newPortada.url,
+                    }
+                }
+                return producto
+            })
+        },
+
+        addImagenes(state, action) {
+            const { producto_id, newImagenes } = action.payload
+            return state.map((producto) => {
+                if (producto._id === producto_id) {
+                    return {
+                        ...producto,
+                        imagenes: newImagenes.url,
+                    }
+                }
+                return producto
+            })
+        },
     },
 })
 
@@ -54,7 +79,9 @@ export const {
     setProductos,
     eraseProducto,
     changeProducto,
-    addCaracteristica
+    addCaracteristica,
+    addPortada,
+    addImagenes
 } = productoSlice.actions
 
 export const initializeProductos = () => {
@@ -123,18 +150,32 @@ export const createCaracteristicas = (producto_id, caracteristica) => {
     }
 }
 
-export const AddPortada = (producto_id, portada) => {
+export const CreatePortada = (producto_id, portada) => {
     return async (dispatch) => {
         try {
-            console.log('en el reducer');
-            console.log(producto_id);
-            console.log(portada);
-            console.log('en el reducer2');
 
             const newPortada = await productoService.addPortada(
                 producto_id,
-                portada)
-            // dispatch(addCaracteristica({ producto_id, newPortada}))
+                portada)                
+                console.log('CreatePortada');
+            dispatch(addPortada({ producto_id, newPortada}))
+        } catch (error) {
+            // Handle error
+            console.error('Error al crear portada:', error)
+            throw error
+        }
+    }
+}
+
+export const CreateImagenes = (producto_id, imagenes) => {
+    return async (dispatch) => {
+        try {
+
+            const newImagenes = await productoService.addImagenes(
+                producto_id,
+                imagenes)
+                console.log('CreateImagenes');
+            dispatch(addImagenes({ producto_id, newImagenes}))
         } catch (error) {
             // Handle error
             console.error('Error al crear portada:', error)
