@@ -121,6 +121,36 @@ const addImagenes = async (producto_id, imagenes) => {
     return response.data;
 }
 
+const appendObservacion = async ({producto_id, observacion}) => {
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`, // Ensure you have the correct token
+        },
+    };
+
+    console.log('en el servicio' + observacion);
+
+    const newObservacion = {observacion}
+
+    const response = await axios.put(`${baseUrl}/${producto_id}/append-observacion`, newObservacion, config);
+    return response.data;
+}
+
+const removeObservacion = async (producto_id, observacion_id) => {
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`, // Ensure you have the correct token
+        },
+    };
+
+    const observacion = {observacion_id}
+
+    const response = await axios.put(`${baseUrl}/${producto_id}/delete-observacion`, observacion, config);
+    return response.data;
+}
+
 const remove = async (producto) => {
     const config = {
         headers: { Authorization: token },
@@ -130,4 +160,4 @@ const remove = async (producto) => {
     return response.data
 }
 
-export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas, addPortada, addImagenes}
+export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas, addPortada, addImagenes, appendObservacion, removeObservacion}

@@ -4,8 +4,22 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { AdminProductos } from './AdminProductos'
+import { useEffect, useState } from 'react'
+
+import productosService from '../../services/productos'
+
 
 const Adminhome = () => {
+    const [caracteristicasList, setCaracteristicasList] = useState([])
+
+    useEffect(() => {
+        productosService
+            .getCaracteristicas()
+            .then((response) => setCaracteristicasList(response))
+    }, [])
+
+
+
     return (
         <div
             style={{
@@ -71,7 +85,7 @@ const Adminhome = () => {
                         </Box>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <AdminProductos  />
+                        <AdminProductos caracteristicasList = {caracteristicasList} />
                     </AccordionDetails>
                 </Accordion>
             </Box>

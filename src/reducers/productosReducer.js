@@ -46,10 +46,59 @@ const productoSlice = createSlice({
                 return producto
             })
         },
+        eraseCaracteristica(state, action) {
+            const { producto_id, caracteristica_id } = action.payload
+
+            return state.map((producto) => {
+                if (producto.id === producto_id) {
+                    return {
+                        ...producto,
+                        caracteristicas: producto.caracteristicas.filter(caracteristica => {
+                            return caracteristica.id !== caracteristica_id
+                        }),
+                    }
+                }
+                return producto
+            })
+        },
+
+        appendObservacion(state, action) {
+            const { producto_id, newObservacion } = action.payload
+
+            console.log(newObservacion);
+            return state.map((producto) => {
+                if (producto.id === producto_id) {
+                    return {
+                        ...producto,
+                        observaciones: [...producto.observaciones, newObservacion],
+                    }
+                }
+                return producto
+            })
+        },
+
+        eraseObservacion(state, action) {
+            const { producto_id, observacion_id } = action.payload
+
+            console.log(producto_id);
+            console.log(observacion_id);
+            return state.map((producto) => {
+                if (producto.id === producto_id) {
+                    return {
+                        ...producto,
+                        observaciones: producto.observaciones.filter(observacion => {
+                            return observacion._id !== observacion_id
+                        }),
+                    }
+                }
+                return producto
+            })
+        },
+
         addPortada(state, action) {
             const { producto_id, newPortada } = action.payload
             return state.map((producto) => {
-                if (producto._id === producto_id) {
+                if (producto.id === producto_id) {
                     return {
                         ...producto,
                         portada: newPortada.url,
@@ -62,7 +111,7 @@ const productoSlice = createSlice({
         addImagenes(state, action) {
             const { producto_id, newImagenes } = action.payload
             return state.map((producto) => {
-                if (producto._id === producto_id) {
+                if (producto.id === producto_id) {
                     return {
                         ...producto,
                         imagenes: newImagenes.url,
@@ -80,6 +129,9 @@ export const {
     eraseProducto,
     changeProducto,
     addCaracteristica,
+    eraseCaracteristica,
+    appendObservacion,
+    eraseObservacion,
     addPortada,
     addImagenes
 } = productoSlice.actions
@@ -145,6 +197,56 @@ export const createCaracteristicas = (producto_id, caracteristica) => {
         } catch (error) {
             // Handle error
             console.error('Error al crear caracteristica:', error)
+            throw error
+        }
+    }
+}
+
+export const DeleteCaracteristica = (caracteristica) => {
+    return async (dispatch) => {
+        
+        const producto_id = caracteristica.producto
+        const caracteristica_id = caracteristica.id
+        
+        try {
+            await caracteristicasService.remove(caracteristica_id)
+            dispatch(eraseCaracteristica({ producto_id, caracteristica_id}))
+        } catch (error) {
+            // Handle error
+            console.error('Error al borrar caracteristica:', error)
+            throw error
+        }
+    }
+}
+
+export const createObservacion = (producto_id, observacion) => {
+    return async (dispatch) => {
+        try {            
+            const newObservacion = await productoService.appendObservacion({
+                producto_id,
+                observacion,
+            })
+      
+            dispatch(appendObservacion({ producto_id, newObservacion}))
+        } catch (error) {
+            // Handle error
+            console.error('Error al crear observacion:', error)
+            throw error
+        }
+    }
+}
+
+export const DeleteObservacion = (observacion, producto_id) => {
+    return async (dispatch) => {
+        
+        try {
+            const observacion_id = observacion._id
+
+            await productoService.removeObservacion(producto_id, observacion_id )
+            dispatch(eraseObservacion({ observacion_id: observacion._id, producto_id}))
+        } catch (error) {
+            // Handle error
+            console.error('Error al borrar caracteristica:', error)
             throw error
         }
     }
