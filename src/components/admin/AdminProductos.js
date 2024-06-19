@@ -1,4 +1,7 @@
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Autocomplete,
     Avatar,
     Box,
@@ -22,6 +25,8 @@ import TableRow from '@mui/material/TableRow'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import CheckIcon from '@mui/icons-material/Check'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+
 
 import { useNavigate } from 'react-router-dom'
 
@@ -383,6 +388,26 @@ const AdminProductos = ({ caracteristicasList }) => {
     }
 
     return (
+
+        <Accordion sx={{ width: '100%' }}>
+        <AccordionSummary
+            expandIcon={<ArrowDownwardIcon />}
+            aria-controls="panel1-content"
+            id={2}
+        >
+            <Box sx={{ display: 'flex' }}>
+                <Typography
+                    sx={{
+                        fontWeight: '500',
+                        fontSize: '1.15rem',
+                    }}
+                >
+                    PRODUCTOS
+                </Typography>
+            </Box>
+        </AccordionSummary>
+        <AccordionDetails>
+           
         <Box
             sx={{
                 width: '1280px',
@@ -455,6 +480,8 @@ const AdminProductos = ({ caracteristicasList }) => {
                 </Table>
             </TableContainer>
         </Box>
+        </AccordionDetails>
+    </Accordion>
     )
 }
 export { AdminProductos }
