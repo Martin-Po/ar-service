@@ -1,4 +1,4 @@
-import { Box, CssBaseline, Grid } from '@mui/material'
+import { CssBaseline} from '@mui/material'
 import './App.css'
 import AppBar from './components/AppBar'
 import Footer from './components/Footer'
@@ -6,8 +6,7 @@ import { Hero_2 } from './components/Hero_2'
 import { Banner } from './components/Banner'
 import { Marcas } from './components/Marcas'
 import { Testimonios } from './components/Testimonios'
-import { Encontranos } from './components/EncontranosImg'
-import { Route, Routes, Navigate, Outlet  } from 'react-router-dom'
+import { Route, Routes} from 'react-router-dom'
 import { Nosotros } from './components/Nosotros'
 import { FAQs } from './components/FAQs'
 import { Contactenos } from './components/Contactenos'
@@ -18,11 +17,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initializeLoggedUser } from './reducers/loginuserReducer'
 import { useEffect, useState } from 'react'
 import productosService from './services/productos'
+import caracteristicasService from './services/caracteristicas'
 import loginService from './services/login'
 import caracteristicasxproducto from './services/caracteristicasxproducto'
 import { initializeProductos, setProductos } from './reducers/productosReducer'
-import { NuevoProducto } from './components/admin/NuevoProducto'
-import { CheckUser } from './reducers/loginuserReducer'
 import { PrivateRoutes } from './components/PrivateRoutes'
 import { NuevoProductoForm } from './components/admin/NuevoProductoForm'
 
@@ -72,6 +70,7 @@ function App() {
     useEffect(() => {
         if (!loggeduser.user){
             productosService.setToken(null);
+            caracteristicasService.setToken(null);
             loginService.setToken(null);
             caracteristicasxproducto.setToken(null);
             dispatch(setProductos(null))   
@@ -80,6 +79,7 @@ function App() {
         else{
             console.log('seteando el token' + loggeduser.user.token);
             productosService.setToken(loggeduser.user.token);
+            caracteristicasService.setToken(loggeduser.user.token);
             loginService.setToken(loggeduser.user.token);
             caracteristicasxproducto.setToken(loggeduser.user.token);
             console.log('entro a la carga');

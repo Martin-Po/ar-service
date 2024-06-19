@@ -1,13 +1,8 @@
 import { Box, Typography } from '@mui/material'
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { AdminProductos } from './AdminProductos'
 import { useEffect, useState } from 'react'
-
 import productosService from '../../services/productos'
-
+import { AdminCaracteristicas } from './AdminCaracteristicas'
 
 const Adminhome = () => {
     const [caracteristicasList, setCaracteristicasList] = useState([])
@@ -18,7 +13,18 @@ const Adminhome = () => {
             .then((response) => setCaracteristicasList(response))
     }, [])
 
+    const agregarCaracteristica = (caracteristica) => {
+        setCaracteristicasList(caracteristicasList.concat(caracteristica))
+    }
 
+    const eliminarCaracteristica = (caracteristica) => {
+        
+        const newCaracteristicasList = caracteristicasList.filter(element => { 
+            return(element.id !== caracteristica.id)})
+        setCaracteristicasList(newCaracteristicasList)
+    }
+
+ 
 
     return (
         <div
@@ -67,27 +73,9 @@ const Adminhome = () => {
                     },
                 }}
             >
-                <Accordion sx={{ width: '100%' }}>
-                    <AccordionSummary
-                        expandIcon={<ArrowDownwardIcon />}
-                        aria-controls="panel1-content"
-                        id={2}
-                    >
-                        <Box sx={{ display: 'flex' }}>
-                            <Typography
-                                sx={{
-                                    fontWeight: '500',
-                                    fontSize: '1.15rem',
-                                }}
-                            >
-                                {'PRODUCTOS'}
-                            </Typography>
-                        </Box>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <AdminProductos caracteristicasList = {caracteristicasList} />
-                    </AccordionDetails>
-                </Accordion>
+                <AdminProductos caracteristicasList={caracteristicasList} />
+
+                <AdminCaracteristicas caracteristicasList={caracteristicasList} eliminarCaracteristica={eliminarCaracteristica} agregarCaracteristica={agregarCaracteristica} />
             </Box>
         </div>
     )
