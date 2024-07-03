@@ -3,8 +3,6 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
-    Button,
-    Collapse,
     IconButton,
     Paper,
     Table,
@@ -79,9 +77,7 @@ const AdminCaracteristicas = ({ caracteristicasList, eliminarCaracteristica, agr
                                         />
                                     )
                                 })}
-                                <TableRow>
                                     <NuevaCaracteristica agregarCaracteristica={agregarCaracteristica} />
-                                </TableRow>
                             </TableBody>
                             <TableBody></TableBody>
                         </Table>
