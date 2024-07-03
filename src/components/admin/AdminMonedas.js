@@ -3,6 +3,8 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
+    Button,
+    Collapse,
     IconButton,
     Paper,
     Table,
@@ -18,9 +20,9 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import DeleteIcon from '@mui/icons-material/Delete'
 import React, { useState } from 'react'
 import CheckIcon from '@mui/icons-material/Check'
-import caracteristicasService from '../../services/caracteristicas'
+import monedasService from '../../services/monedas'
 
-const AdminCaracteristicas = ({ caracteristicasList, eliminarCaracteristica, agregarCaracteristica }) => {
+const AdminMonedas = ({ monedasList, eliminarMoneda, agregarMoneda }) => {
     return (
         <Accordion sx={{ width: '100%' }}>
             <AccordionSummary
@@ -35,7 +37,7 @@ const AdminCaracteristicas = ({ caracteristicasList, eliminarCaracteristica, agr
                             fontSize: '1.15rem',
                         }}
                     >
-                        CARACTERISTICAS
+                        MONEDAS
                     </Typography>
                 </Box>
             </AccordionSummary>
@@ -68,16 +70,16 @@ const AdminCaracteristicas = ({ caracteristicasList, eliminarCaracteristica, agr
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {caracteristicasList.map((caracteristica) => {
+                                {monedasList.map((moneda) => {
                                     return (
                                         <Row
-                                            caracteristica={caracteristica}
-                                            eliminarCaracteristica={eliminarCaracteristica}
-                                            key={caracteristica.id}
+                                            moneda={moneda}
+                                            eliminarMoneda={eliminarMoneda}
+                                            key={moneda.id}
                                         />
                                     )
                                 })}
-                                    <NuevaCaracteristica agregarCaracteristica={agregarCaracteristica} />
+                                    <NuevaMoneda agregarMoneda={agregarMoneda} />
                             </TableBody>
                             <TableBody></TableBody>
                         </Table>
@@ -88,15 +90,15 @@ const AdminCaracteristicas = ({ caracteristicasList, eliminarCaracteristica, agr
     )
 }
 
-const Row = ({ caracteristica, eliminarCaracteristica }) => {
+const Row = ({ moneda, eliminarMoneda }) => {
 
 
-    const deleteCaracteristica = async (caracteristica) => {
+    const deleteMoneda = async (moneda) => {
         try {
-            await caracteristicasService.remove(caracteristica.id).then(
+            await monedasService.remove(moneda.id).then(
                 data => console.log(data)
             )
-            eliminarCaracteristica(caracteristica)
+            eliminarMoneda(moneda)
         } catch (exception) {
             const errorMessage = exception.response?.data?.error || 'Error desconocido';
             console.log('dio error', errorMessage)
@@ -107,13 +109,13 @@ const Row = ({ caracteristica, eliminarCaracteristica }) => {
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell align="left">{caracteristica.name}</TableCell>
+                <TableCell align="left">{moneda.name}</TableCell>
 
-                <TableCell align="left">{caracteristica.descripcion}</TableCell>
+                <TableCell align="left">{moneda.descripcion}</TableCell>
                 <TableCell align="left">
                     {' '}
                     <IconButton
-                        onClick={() => deleteCaracteristica(caracteristica)}
+                        onClick={() => deleteMoneda(moneda)}
                         aria-label="delete"
                     >
                         <DeleteIcon />
@@ -124,21 +126,21 @@ const Row = ({ caracteristica, eliminarCaracteristica }) => {
     )
 }
 
-const NuevaCaracteristica = ({agregarCaracteristica}) => {
+const NuevaMoneda = ({agregarMoneda}) => {
     const [activo, setActivo] = useState(true)
 
     const [newNombre, setNewNombre] = useState('')
     const [newDescripcion, setNewDescripcion] = useState('')
 
-    const addCaracteristica = async () => {
+    const addMoneda = async () => {
         try {
             setActivo(false)
-            const newCaracteristica = {
+            const newMoneda = {
                 name: newNombre,
                 descripcion: newDescripcion,
             }
-            const createdCaracteristica = await caracteristicasService.create(newCaracteristica)
-            agregarCaracteristica(createdCaracteristica)
+            const createdMoneda = await monedasService.create(newMoneda)
+            agregarMoneda(createdMoneda)
             setNewDescripcion('')
             setNewNombre('')
         } catch (exception) {
@@ -171,7 +173,7 @@ const NuevaCaracteristica = ({agregarCaracteristica}) => {
                 {newNombre && newDescripcion && (
                     <IconButton
                         disabled={!activo}
-                        onClick={() => addCaracteristica()}
+                        onClick={() => addMoneda()}
                         aria-label="delete"
                     >
                         <CheckIcon />
@@ -182,4 +184,4 @@ const NuevaCaracteristica = ({agregarCaracteristica}) => {
     )
 }
 
-export { AdminCaracteristicas }
+export { AdminMonedas }
