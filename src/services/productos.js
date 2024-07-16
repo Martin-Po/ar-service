@@ -85,6 +85,16 @@ const update = async (id, newObject) => {
     return response.data
 }
 
+
+const updateEstado = async (id, newObject) => {
+    
+    const config = {
+        headers: { Authorization: token },
+    }
+    const response = await axios.put(`${baseUrl}/${id}/change-state`, newObject, config)
+    return response.data
+}
+
 const addPortada = async (producto_id, portada) => {
     const formData = new FormData();
     for (let i = 0; i < portada.length; i++) {
@@ -160,4 +170,4 @@ const remove = async (producto) => {
     return response.data
 }
 
-export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas, addPortada, addImagenes, appendObservacion, removeObservacion}
+export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas, addPortada, addImagenes, appendObservacion, removeObservacion, updateEstado}

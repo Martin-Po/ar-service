@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initializeLoggedUser } from './reducers/loginuserReducer'
 import { useEffect, useState } from 'react'
 import productosService from './services/productos'
+import combosService from './services/combos'
 import caracteristicasService from './services/caracteristicas'
 import monedasService from './services/monedas'
 import tiposService from './services/tipos'
@@ -26,6 +27,7 @@ import caracteristicasxproducto from './services/caracteristicasxproducto'
 import { initializeProductos, setProductos } from './reducers/productosReducer'
 import { PrivateRoutes } from './components/PrivateRoutes'
 import { NuevoProductoForm } from './components/admin/NuevoProductoForm'
+import { initializeCombos } from './reducers/combosReducer'
 
 
 
@@ -35,6 +37,8 @@ function App() {
 
     const loggeduser = useSelector((state) => state.loggeduser)
     const productos = useSelector((state) => state.productos)
+    const combos = useSelector((state) => state.combos)
+
 
  
 
@@ -49,6 +53,7 @@ function App() {
 
     useEffect(() => {
         if (!loggeduser.user){
+            combosService.setToken(null);
             productosService.setToken(null);
             caracteristicasService.setToken(null);
             loginService.setToken(null);
@@ -62,14 +67,17 @@ function App() {
         else{
             console.log('seteando el token' + loggeduser.user.token);
             productosService.setToken(loggeduser.user.token);
+            combosService.setToken(loggeduser.user.token);
             caracteristicasService.setToken(loggeduser.user.token);
             loginService.setToken(loggeduser.user.token);
             caracteristicasxproducto.setToken(loggeduser.user.token);
             monedasService.setToken(loggeduser.user.token);
             tiposService.setToken(loggeduser.user.token);
             subtiposService.setToken(loggeduser.user.token);
-            console.log('entro a la carga');
             dispatch(initializeProductos()).then(() => {
+                setloaded(true);
+            });
+            dispatch(initializeCombos()).then(() => {
                 setloaded(true);
             });
             console.log(productos);

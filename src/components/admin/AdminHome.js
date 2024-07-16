@@ -5,6 +5,7 @@ import productosService from '../../services/productos'
 import { AdminCaracteristicas } from './AdminCaracteristicas'
 import { AdminMonedas } from './AdminMonedas'
 import { AdminTipos } from './AdminTipos'
+import { AdminCombos } from './AdminCombos'
 
 const Adminhome = () => {
     const [caracteristicasList, setCaracteristicasList] = useState([])
@@ -255,6 +256,7 @@ const Adminhome = () => {
                 {monedasList && <AdminMonedas monedasList={monedasList} eliminarMoneda={eliminarMoneda} agregarMoneda={agregarMoneda} />}
 
                 <AdminTipos tiposList={tiposList} subtiposList={subtiposList} agregarTipo={agregarTipo} eliminarTipo={eliminarTipo} agregarSubtipo={agregarSubtipo} eliminarSubtipo={eliminarSubtipo} quitarTipo={quitarTipo} vincularTipo={vincularTipo} quitarSubtipo={quitarSubtipo} vincularSubtipo={vincularSubtipo}/>
+                <AdminCombos monedasList={monedasList}/>
             </Box>
         </div>
     )

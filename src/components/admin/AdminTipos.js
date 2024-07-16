@@ -500,8 +500,6 @@ const AppendSubtipo = ({ selectedTipo, vincularSubtipo, tiposList, subtiposList,
         }
     }
 
-    console.log(subtiposList);
-    console.log(selectedTipo);
 
 
     const availableSubtipos = subtiposList.filter(

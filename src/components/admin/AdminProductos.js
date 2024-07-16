@@ -36,6 +36,8 @@ import {
     createObservacion,
     DeleteObservacion,
     createCaracteristicas,
+    deleteProductoById,
+    updateEstado
 } from '../../reducers/productosReducer'
 
 const ObservacionesXProductoDetail = ({ observaciones, producto_id }) => {
@@ -297,6 +299,32 @@ const CaracteristicasXProductoDetail = ({caracteristicas, caracteristicasList, p
 const Row = ({ producto, caracteristicasList }) => {
     const [open, setOpen] = React.useState(false)
 
+    const dispatch = useDispatch()
+
+    const deleteProducto = async (producto) => {
+        try {
+            await dispatch(deleteProductoById(producto.id)).then(() => {
+                console.log('Producto elimiado correctamente'); // Aquí agregas el log    
+            })
+            console.log('dispatch completed successfully');
+        } catch (exception) {
+            console.error('Error during dispatch:', exception);
+        }
+    }
+
+    const cambiarEstado = async (producto, estado) => {
+        try {
+            const nuevoEstado = estado
+            await dispatch(updateEstado(producto, nuevoEstado)).then(() => {
+                console.log('Producto elimiado correctamente'); // Aquí agregas el log    
+            })
+            console.log('dispatch completed successfully');
+        } catch (exception) {
+            console.error('Error during dispatch:', exception);
+        }
+    }
+
+
     return (
         <React.Fragment>
             <TableRow
@@ -317,7 +345,7 @@ const Row = ({ producto, caracteristicasList }) => {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th">
-                    <Chip
+                    <Chip onClick={() => cambiarEstado(producto.id, producto.estado_activo.estado === 'Disponible' ? 'Vendido' : 'Disponible')}
                         label={producto.estado_activo.estado}
                         color={
                             producto.estado_activo.estado === 'Disponible'
@@ -344,6 +372,15 @@ const Row = ({ producto, caracteristicasList }) => {
                     {producto.moneda.name + ' ' + producto.precio}
                 </TableCell>
                 <TableCell align="right">{producto.descuento} %</TableCell>
+                <TableCell align="right">
+                    {' '}
+                    <IconButton
+                        onClick={() => deleteProducto(producto)}
+                        aria-label="delete"
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell
@@ -460,6 +497,8 @@ const AdminProductos = ({ caracteristicasList }) => {
                             <TableCell align="right">Origen</TableCell>
                             <TableCell align="right">Precio</TableCell>
                             <TableCell align="right">Descuento</TableCell>
+                            <TableCell align="right"></TableCell>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>

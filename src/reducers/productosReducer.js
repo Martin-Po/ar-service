@@ -31,6 +31,19 @@ const productoSlice = createSlice({
                 return producto
             })
         },
+        editarEstado(state, action) {
+            const { productoId, estado } = action.payload
+
+            return state.map((producto) => {
+                if (producto.id === productoId) {
+                    return {
+                        ...producto,
+                        estado_activo: estado,
+                    }
+                }
+                return producto
+            })
+        },
         addCaracteristica(state, action) {
             const { producto_id, newCaracteristicas } = action.payload
             console.log('en el dispatch');
@@ -128,6 +141,7 @@ export const {
     setProductos,
     eraseProducto,
     changeProducto,
+    editarEstado,
     addCaracteristica,
     eraseCaracteristica,
     appendObservacion,
@@ -166,6 +180,22 @@ export const updateProducto = (productoId, NewName) => {
         try {
             await productoService.update(productoId, {name: NewName})
             dispatch(changeProducto({ productoId, NewName }))
+        } catch (error) {
+            // Handle error
+            console.error('Error deleting producto element:', error)
+        }
+    }
+}
+
+export const updateEstado = (productoId, nuevoEstado) => {
+    return async (dispatch) => {
+        try {
+            console.log('dispatch1');
+            console.log(productoId);
+            console.log(nuevoEstado);
+            console.log('dispatch2');
+            const newEstado = await productoService.updateEstado(productoId, {estado: nuevoEstado})
+            dispatch(editarEstado({ productoId, estado: newEstado.estado_activo }))
         } catch (error) {
             // Handle error
             console.error('Error deleting producto element:', error)
