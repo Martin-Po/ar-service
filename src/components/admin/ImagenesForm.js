@@ -13,6 +13,7 @@ const ImagenesForm = ({ NuevoProducto }) => {
     const [status, setStatus] = useState(true)
     const [portadapreview, setPortadaPreview] = useState([AddImage])
     const [imagenesapreview, setImagenesPreview] = useState([AddImage])
+    const [imageReady, setmageReady] = useState(false)
 
 
     const dispatch = useDispatch()
@@ -21,19 +22,24 @@ const ImagenesForm = ({ NuevoProducto }) => {
 
 
     const AgregarPortada = async (event) => {
-        try {
+        if(imageReady)
+       { try {
             await dispatch(CreatePortada(NuevoProducto.id, portada)).then(setStatus(false))
+            setmageReady(false)
         } catch (exception) {
             console.log('dio error')
-        }
+        }}
     }
 
     const AgregarImagenes = async (event) => {
-        try {
-            await dispatch(CreateImagenes(NuevoProducto.id, imagenes)).then(navigate('/admin/home')
-        )
-        } catch (exception) {
-            console.log('dio error')
+        if(imageReady)
+        {
+            try {
+                await dispatch(CreateImagenes(NuevoProducto.id, imagenes)).then(navigate('/admin/home')
+            )
+            } catch (exception) {
+                console.log('dio error')
+            }
         }
     }
 
@@ -49,8 +55,11 @@ const ImagenesForm = ({ NuevoProducto }) => {
                 setPortadaPreview(reader.result)
             }
             reader.readAsDataURL(file)
+            setmageReady(true)
         } else {
             setPortadaPreview(AddImage)
+            setmageReady(false)
+
         }
     }
 
@@ -72,9 +81,12 @@ const ImagenesForm = ({ NuevoProducto }) => {
           };
           reader.readAsDataURL(file);
         }
+        setmageReady(true)
+
     
         if (files.length === 0) {
-          setImagenesPreview([AddImage]);
+            setmageReady(false)
+            setImagenesPreview([AddImage]);
         }
       };
     

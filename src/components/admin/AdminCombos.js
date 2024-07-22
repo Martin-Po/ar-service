@@ -46,6 +46,7 @@ const AdminCombos = ({ eliminarCombo, monedasList }) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
+
     return (
         <Accordion sx={{ width: '100%' }}>
             <AccordionSummary
@@ -218,7 +219,9 @@ const Row = ({ combo, eliminarCombo, monedasList }) => {
                                 <TableCell align="left">Precio</TableCell>
                                 <TableCell align="left"></TableCell>
                             </TableRow>
-                            {combo.productos.map((producto) => {
+                            
+                            {                             
+                            combo.productos.map((producto) => {
                                 return (
                                     <TableRow>
                                         <TableCell align="left">
@@ -231,7 +234,7 @@ const Row = ({ combo, eliminarCombo, monedasList }) => {
                                             {producto.modelo}
                                         </TableCell>
                                         <TableCell align="left">
-                                            {monedasList.filter(moneda => moneda.id === producto.moneda)[0].name + ' ' + producto.precio}
+                                            {monedasList.length > 0 ? monedasList.filter(moneda => moneda.id === producto.moneda)[0].name + ' ' + producto.precio : ''}
                                         </TableCell>
                                         <TableCell align="left"></TableCell>
                                     </TableRow>
