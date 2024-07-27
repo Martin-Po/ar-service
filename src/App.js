@@ -28,6 +28,7 @@ import { initializeProductos, setProductos } from './reducers/productosReducer'
 import { PrivateRoutes } from './components/PrivateRoutes'
 import { NuevoProductoForm } from './components/admin/NuevoProductoForm'
 import { initializeCombos } from './reducers/combosReducer'
+import { Tienda } from './components/tienda/Tienda'
 
 
 
@@ -80,7 +81,6 @@ function App() {
             dispatch(initializeCombos()).then(() => {
                 setloaded(true);
             });
-            console.log(productos);
             
         }
     }, [loggeduser])
@@ -122,6 +122,7 @@ function App() {
             <CssBaseline />
             <AppBar />
             <Routes>
+                <Route path="/tienda" element={<Tienda/>}/>
                 <Route path="/nosotros" element={<Nosotros/>}/>
                 <Route path="/faqs" element={<FAQs/>}/>
                 <Route path="/contactenos" element={<ContactenosSite/>}/>
