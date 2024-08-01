@@ -48,7 +48,14 @@ function App() {
 
 
     useEffect(() => {   
-        dispatch(initializeLoggedUser())
+        dispatch(initializeLoggedUser())        
+        dispatch(initializeProductos()).then(() => {
+            setloaded(true);
+        });
+        dispatch(initializeCombos()).then(() => {
+            setloaded(true);
+        });
+
     }, [dispatch])
 
 
@@ -62,7 +69,6 @@ function App() {
             monedasService.setToken(null);
             tiposService.setToken(null)
             subtiposService.setToken(null)
-            dispatch(setProductos(null))   
             console.log('borrando todo');
         }
         else{
@@ -75,12 +81,6 @@ function App() {
             monedasService.setToken(loggeduser.user.token);
             tiposService.setToken(loggeduser.user.token);
             subtiposService.setToken(loggeduser.user.token);
-            dispatch(initializeProductos()).then(() => {
-                setloaded(true);
-            });
-            dispatch(initializeCombos()).then(() => {
-                setloaded(true);
-            });
             
         }
     }, [loggeduser])

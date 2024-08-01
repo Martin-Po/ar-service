@@ -27,6 +27,14 @@ const getMarcas = () => {
     return request.then(response => response.data)
 }
 
+const getMarcasDisponibles = () => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.get(`${baseUrl}/marcas-disponibles`, config)
+    return request.then(response => response.data)
+}
+
 const getMonedas = () => {
     const config = {
         headers: { Authorization: token },
@@ -170,4 +178,4 @@ const remove = async (producto) => {
     return response.data
 }
 
-export default {getAll, create, setToken, update, remove, getMarcas, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas, addPortada, addImagenes, appendObservacion, removeObservacion, updateEstado}
+export default {getAll, create, setToken, update, remove, getMarcas, getMarcasDisponibles, getOrigenes, getMonedas, getTipos, getSubtipos, getCaracteristicas, addPortada, addImagenes, appendObservacion, removeObservacion, updateEstado}
