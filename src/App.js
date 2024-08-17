@@ -29,6 +29,7 @@ import { PrivateRoutes } from './components/PrivateRoutes'
 import { NuevoProductoForm } from './components/admin/NuevoProductoForm'
 import { initializeCombos } from './reducers/combosReducer'
 import { Tienda } from './components/tienda/Tienda'
+import { Producto } from './components/tienda/Producto'
 
 
 
@@ -123,6 +124,12 @@ function App() {
             <AppBar />
             <Routes>
                 <Route path="/tienda" element={<Tienda/>}/>
+                <Route
+                  path="/tienda/:id"
+                  element={
+                      <Producto />
+                  }
+              />
                 <Route path="/nosotros" element={<Nosotros/>}/>
                 <Route path="/faqs" element={<FAQs/>}/>
                 <Route path="/contactenos" element={<ContactenosSite/>}/>

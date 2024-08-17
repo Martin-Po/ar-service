@@ -19,6 +19,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import { useEffect, useState } from 'react'
 import productosService from '../../services/productos'
+import { Link } from 'react-router-dom'
 
 const Tienda = () => {
     return (
@@ -43,6 +44,7 @@ const Tienda = () => {
 const ProductosList = () => {
     const productos = useSelector((state) => state.productos)
     const [filteredMarcas, setFilteredMarcas] = useState([])
+    const [filteredOrigenes, setFilteredOrigenes] = useState([])
 
     const FilterMarcas = (marca) => {
         if (filteredMarcas.includes(marca)) {
@@ -54,16 +56,30 @@ const ProductosList = () => {
         }
     }
 
-    const FiltrarProductos = ({ productos, filteredMarcas }) => {
-        let ProductosFiltrados = productos
-
-        if (filteredMarcas.length > 0) {
-            ProductosFiltrados = productos.filter((producto) =>
-                filteredMarcas.includes(producto.marca)
+    const FilterOrigenes = (origen) => {
+        if (filteredOrigenes.includes(origen)) {
+            setFilteredOrigenes(
+                filteredOrigenes.filter((elemento) => elemento !== origen)
             )
+        } else {
+            setFilteredOrigenes(filteredOrigenes.concat(origen))
         }
+    }
 
-        return ProductosFiltrados
+    const FiltrarProductos = ({
+        productos,
+        filteredMarcas,
+        filteredOrigenes,
+    }) => {
+        return productos.filter((producto) => {
+            const marcaMatch =
+                filteredMarcas.length === 0 ||
+                filteredMarcas.includes(producto.marca)
+            const origenMatch =
+                filteredOrigenes.length === 0 ||
+                filteredOrigenes.includes(producto.origen)
+            return marcaMatch && origenMatch
+        })
     }
 
     return (
@@ -110,8 +126,8 @@ const ProductosList = () => {
                     },
                     '@media (max-width:768px)': {
                         paddingLeft: '0',
-                        paddingRight:'0',
-                        },
+                        paddingRight: '0',
+                    },
                 }}
             >
                 <Grid
@@ -123,6 +139,8 @@ const ProductosList = () => {
                     <Filtros
                         FilterMarcas={FilterMarcas}
                         filteredMarcas={filteredMarcas}
+                        FilterOrigenes={FilterOrigenes}
+                        filteredOrigenes={filteredOrigenes}
                     />
                 </Grid>
 
@@ -138,7 +156,11 @@ const ProductosList = () => {
                 >
                     <Grid container spacing={1}>
                         {productos &&
-                            FiltrarProductos({ productos, filteredMarcas })
+                            FiltrarProductos({
+                                productos,
+                                filteredMarcas,
+                                filteredOrigenes,
+                            })
                                 .filter(
                                     (producto) =>
                                         producto.estado_activo.estado ===
@@ -154,24 +176,44 @@ const ProductosList = () => {
     )
 }
 
-const Filtros = ({ FilterMarcas, filteredMarcas }) => {
+const Filtros = ({
+    FilterMarcas,
+    filteredMarcas,
+    FilterOrigenes,
+    filteredOrigenes,
+}) => {
     useEffect(() => {
-        productosService.getMarcasDisponibles().then((response) => setMarcasList(response))
+        productosService
+            .getMarcasDisponibles()
+            .then((response) => setMarcasList(response))
+        productosService
+            .getOrigenesDisponibles()
+            .then((response) => setOrigenesList(response))
     }, [])
 
     const [marcasList, setMarcasList] = useState([])
+    const [origenesList, setOrigenesList] = useState([])
 
     return (
         <Box
             sx={{
                 display: 'flex',
                 flexGrow: 1,
+                flexDirection: 'column',
                 borderColor: 'black',
                 borderWidth: '1rem',
             }}
         >
-            <Typography sx={{ fontWeight: 'bold' }}>
-                MARCAS
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexGrow: 1,
+                    flexDirection: 'column',
+                    borderColor: 'black',
+                    borderWidth: '1rem',
+                }}
+            >
+                <Typography sx={{ fontWeight: 'bold' }}>MARCAS</Typography>
                 <List dense={true}>
                     {marcasList.map((marca) => {
                         return (
@@ -188,7 +230,34 @@ const Filtros = ({ FilterMarcas, filteredMarcas }) => {
                         )
                     })}
                 </List>
-            </Typography>
+            </Box>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexGrow: 1,
+                    flexDirection: 'column',
+                    borderColor: 'black',
+                    borderWidth: '1rem',
+                }}
+            >
+                <Typography sx={{ fontWeight: 'bold' }}>ORIGENES</Typography>
+                <List dense={true}>
+                    {origenesList.map((origen) => {
+                        return (
+                            <ListItem sx={{ paddingTop: '0', margin: '0' }}>
+                                <Checkbox
+                                    sx={{ padding: '0', margin: '0' }}
+                                    size="small"
+                                    edge="start"
+                                    checked={filteredOrigenes.includes(origen)}
+                                    onClick={() => FilterOrigenes(origen)}
+                                />
+                                <ListItemText primary={origen} />
+                            </ListItem>
+                        )
+                    })}
+                </List>
+            </Box>
         </Box>
     )
 }
@@ -205,7 +274,6 @@ const Producto = ({ producto }) => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                 
                 }}
             >
                 <Paper
@@ -219,7 +287,7 @@ const Producto = ({ producto }) => {
                         flexGrow: 1,
                         '@media (max-width:768px)': {
                             flexDirection: 'row',
-                            width:'100%'
+                            width: '100%',
                         },
                     }}
                 >
@@ -229,8 +297,8 @@ const Producto = ({ producto }) => {
                             flexDirection: 'column',
                             aling: 'center',
                             '@media (max-width:768px)': {
-                           padding:'0.5rem'
-                        },
+                                padding: '0.5rem',
+                            },
                         }}
                     >
                         <img
@@ -239,76 +307,76 @@ const Producto = ({ producto }) => {
                             alt="nosotros"
                         />
                     </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            width: '11rem',
-                            flexGrow: 1,
-                            '@media (max-width:768px)': {
-                           alignSelf:'flex-start'
-                        },
-                        }}
+                    <Link
+                        to={`/tienda/${producto.id}`}
+                        style={{ textDecoration: 'none', color: 'black' }}
                     >
-                        <Typography
+                        <Box
                             sx={{
                                 display: 'flex',
-                                alignItems: 'flex-start',
-                                textAlign: 'left',
-                                fontSize: '1.15rem',
-                                fontWeight: '600',
+                                flexDirection: 'column',
+                                width: '11rem',
+                                flexGrow: 1,
                                 '@media (max-width:768px)': {
-                                    fontSize: '1.50rem',
-                                    fontWeight: '700',
-                                 },
+                                    alignSelf: 'flex-start',
+                                },
                             }}
                         >
-                            {producto.moneda.name +
-                                ' ' +
-                                Math.round(producto.precio * 100) / 100}
-                        </Typography>
-
-                        <Typography
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'flex-start',
-                                fontSize: '0.85rem',
-                                marginTop: '0.25rem',
-                                marginBottom: '0.25rem',
-                                overflow: "hidden",
-                                WebkitBoxOrient: "vertical",
-                                textOverflow: "ellipsis",
-                                WebkitLineClamp: "2",
-                                paddingRight:'0.25rem',
-                                '@media (max-width:768px)': {
+                            <Typography
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    textAlign: 'left',
                                     fontSize: '1.15rem',
-                                 },
-                            }}
-                        >
-                            {producto.name}
-                        </Typography>
-                        <Typography
-                            sx={{
-                                display:'none',
-                                
-                                '@media (max-width:768px)': {
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    display: "-webkit-box",
-                                    WebkitLineClamp: "4",
-                                    WebkitBoxOrient: "vertical",
+                                    fontWeight: '600',
+                                    '@media (max-width:768px)': {
+                                        fontSize: '1.50rem',
+                                        fontWeight: '700',
+                                    },
+                                }}
+                            >
+                                {producto.moneda.name +
+                                    ' ' +
+                                    Math.round(producto.precio * 100) / 100}
+                            </Typography>
+
+                            <Typography
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
                                     fontSize: '0.85rem',
+                                    marginTop: '0.25rem',
+                                    marginBottom: '0.25rem',
+                                    overflow: 'hidden',
+                                    WebkitBoxOrient: 'vertical',
+                                    textOverflow: 'ellipsis',
+                                    WebkitLineClamp: '2',
+                                    paddingRight: '0.25rem',
+                                    '@media (max-width:768px)': {
+                                        fontSize: '1.15rem',
+                                    },
+                                }}
+                            >
+                                {producto.name}
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    display: 'none',
 
-                              
-
-
-
-                                 },
-                            }}
-                        >
-                            {producto.descripcion}
-                        </Typography>
-                    </Box>
+                                    '@media (max-width:768px)': {
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        display: '-webkit-box',
+                                        WebkitLineClamp: '4',
+                                        WebkitBoxOrient: 'vertical',
+                                        fontSize: '0.85rem',
+                                    },
+                                }}
+                            >
+                                {producto.descripcion}
+                            </Typography>
+                        </Box>
+                    </Link>
                 </Paper>
             </Grid>
         </>
@@ -329,14 +397,12 @@ const CombosList = () => {
                     width: '100%',
                     alignItems: 'baseline',
                 },
-                
-                
             }}
         >
             <Typography
                 sx={{
                     margin: '1rem',
-                    flexGrow:1,
+                    flexGrow: 1,
 
                     display: 'flex',
                     justifyContent: 'left',
@@ -352,7 +418,7 @@ const CombosList = () => {
                     justifyContent: 'space-evenly',
                     width: '1280px',
                     height: 'fit-content',
-                    paddingLeft:'1rem',
+                    paddingLeft: '1rem',
                     gap: 2,
                     '@media (max-width: 1300px)': {
                         width: '992px',
@@ -398,8 +464,8 @@ const Combo = ({ combo }) => {
         <>
             <Grid
                 item
-                xs = {4}
-                sm = {3}
+                xs={4}
+                sm={3}
                 lg={2}
                 sx={{
                     display: 'flex',
@@ -420,7 +486,7 @@ const Combo = ({ combo }) => {
                     }}
                 >
                     <img
-                        style={{ width: '100%', aspectRatio: 1/1 }}
+                        style={{ width: '100%', aspectRatio: 1 / 1 }}
                         src={combo.productos[selectedProducto].portada}
                         alt="nosotros"
                     />
@@ -430,9 +496,9 @@ const Combo = ({ combo }) => {
                             display: 'flex',
                             justifyContent: 'space-between',
                             '@media (max-width:768px)': {
-                            marginTop: '-5rem',
-                            placeSelf:'flex-end',
-                               width:'100%'
+                                marginTop: '-5rem',
+                                placeSelf: 'flex-end',
+                                width: '100%',
                             },
                         }}
                     >
@@ -443,10 +509,9 @@ const Combo = ({ combo }) => {
                                 width: '2rem',
                                 height: '2rem',
                                 color: 'white',
-                                
+
                                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                '@media (max-width:768px)': {
-                                    },
+                                '@media (max-width:768px)': {},
                             }}
                         >
                             <ArrowBackIosIcon sx={{ marginLeft: '0.5rem' }} />
@@ -471,14 +536,15 @@ const Combo = ({ combo }) => {
                             backgroundColor: 'rgba(0, 0, 0, 0.5)', // semi-transparent background
                             padding: '0.5rem',
                             '@media (max-width:768px)': {
-                            placeSelf:'flex-end',
-                                textWrap:'nowrap',
-                               fontSize:'0.75rem',
-                               width:'100%',
-                               textOverflow: 'ellipsis'
+                                placeSelf: 'flex-end',
+                                textWrap: 'nowrap',
+                                fontSize: '0.75rem',
+                                width: '100%',
+                                textOverflow: 'ellipsis',
                             },
                         }}
                     >
+                        
                         {combo.productos[selectedProducto].name.length < 21
                             ? combo.productos[selectedProducto].name
                             : combo.productos[selectedProducto].name.substring(
@@ -487,39 +553,44 @@ const Combo = ({ combo }) => {
                               ) + '...'}
                     </Box>
                 </Box>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '11rem',
-                        '@media (max-width:768px)': {
-                            width: '8rem',
-                            alignItems: 'baseline',
-                        },
-                    }}
+                <Link
+                    to={`/tienda/combos/${combo.id}`}
+                    style={{ textDecoration: 'none', color: 'black' }}
                 >
-                    <Typography
+                    <Box
                         sx={{
-                            fontSize: '0.85rem',
-                            marginTop: '0.25rem',
-                            marginBottom: '0.25rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            width: '11rem',
+                            '@media (max-width:768px)': {
+                                width: '8rem',
+                                alignItems: 'baseline',
+                            },
                         }}
                     >
-                        {combo.name}
-                    </Typography>
-                    <Typography
-                        sx={{
-                            flexGrow: 1,
-                            textAlign: 'left',
-                            fontSize: '1.15rem',
-                            fontWeight: '600',
-                        }}
-                    >
-                        {combo.moneda.name +
-                            ' ' +
-                            Math.round(combo.precio * 100) / 100}
-                    </Typography>
-                </Box>
+                        <Typography
+                            sx={{
+                                fontSize: '0.85rem',
+                                marginTop: '0.25rem',
+                                marginBottom: '0.25rem',
+                            }}
+                        >
+                            {combo.name}
+                        </Typography>
+                        <Typography
+                            sx={{
+                                flexGrow: 1,
+                                textAlign: 'left',
+                                fontSize: '1.15rem',
+                                fontWeight: '600',
+                            }}
+                        >
+                            {combo.moneda.name +
+                                ' ' +
+                                Math.round(combo.precio * 100) / 100}
+                        </Typography>
+                    </Box>
+                </Link>
             </Grid>
         </>
     )
@@ -530,8 +601,12 @@ const Vendidos = () => {
     const [selectedPage, setSelectedPage] = useState(0)
 
     const moveForward = () => {
-        const productos_vendidos = productos.filter((producto) =>producto.estado_activo.estado !== 'Disponible').length
-        setSelectedPage((prev) =>  productos_vendidos - 5 > prev ? prev + 1 : prev  )
+        const productos_vendidos = productos.filter(
+            (producto) => producto.estado_activo.estado !== 'Disponible'
+        ).length
+        setSelectedPage((prev) =>
+            productos_vendidos - 5 > prev ? prev + 1 : prev
+        )
     }
 
     const moveBackwards = () => {
@@ -572,7 +647,7 @@ const Vendidos = () => {
                     flexWrap: 'nowrap',
                     width: '1280px',
                     height: 'fit-content',
-                    paddingLeft:'1rem',
+                    paddingLeft: '1rem',
                     gap: 2,
 
                     '@media (max-width: 1300px)': {
@@ -585,10 +660,9 @@ const Vendidos = () => {
                     '@media (max-width:1024px)': {
                         width: '100%',
                         alignItems: 'baseline',
-                    '@media (max-width:768px)': {
-                        overflowX:'scroll',
-                    }
-
+                        '@media (max-width:768px)': {
+                            overflowX: 'scroll',
+                        },
                     },
                 }}
             >
@@ -612,7 +686,7 @@ const Vendidos = () => {
                     justifyContent: 'space-between',
                     '@media (max-width:768px)': {
                         display: 'none',
-                    }
+                    },
                 }}
             >
                 <IconButton
@@ -671,7 +745,7 @@ const ProductoVendido = ({ producto, selectedPage }) => {
                         flexGrow: 1,
                         '@media (max-width:1300px)': {
                             width: '14.15rem',
-                        }
+                        },
                     }}
                 >
                     <Box
@@ -688,26 +762,31 @@ const ProductoVendido = ({ producto, selectedPage }) => {
                             alt="nosotros"
                         />
                     </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            width: '11rem',
-                            flexGrow: 1,
-                        }}
+                    <Link
+                        to={`/tienda/${producto.id}`}
+                        style={{ textDecoration: 'none', color: 'black' }}
                     >
-                        <Typography
+                        <Box
                             sx={{
                                 display: 'flex',
-                                alignItems: 'flex-start',
-                                fontSize: '0.85rem',
-                                marginTop: '0.25rem',
-                                marginBottom: '0.25rem',
+                                flexDirection: 'column',
+                                width: '11rem',
+                                flexGrow: 1,
                             }}
                         >
-                            {producto.name}
-                        </Typography>
-                    </Box>
+                            <Typography
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    fontSize: '0.85rem',
+                                    marginTop: '0.25rem',
+                                    marginBottom: '0.25rem',
+                                }}
+                            >
+                                {producto.name}
+                            </Typography>
+                        </Box>
+                    </Link>
                 </Paper>
             </Grid>
         </>
