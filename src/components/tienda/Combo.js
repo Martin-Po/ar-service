@@ -17,9 +17,15 @@ import {
 import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import productosService from '../../services/productos'
 
-const Producto = () => {
+
+const Combo = () => {
     const { id } = useParams()
+    const combos = useSelector((state) => state.combos)
+    const combo = combos.find((combo) => combo.id === id)
+    
+
     const productos = useSelector((state) => state.productos)
     const producto = productos.find((producto) => producto.id === id)
 
@@ -62,13 +68,13 @@ const Producto = () => {
                     },
                 }}
             >
-                {producto && (
+                {combo && (
                     <>
-                        <ProductoImages producto={producto} />
-                        <Detalles producto={producto} />
+                        <ComboImages combo={combo} />
+                        <Detalles combo={combo} />
 
-                        <Caracteristicas producto={producto} />
-                        <Similares producto={producto} />
+                        <Caracteristicas combo={combo} />
+                        <ProductosCombo combo={combo} />
                     </>
                 )}
             </Grid>
@@ -76,20 +82,19 @@ const Producto = () => {
     )
 }
 
-const ProductoImages = ({ producto }) => {
+const ComboImages = ({ combo }) => {
     const [selectedImage, setSelectedImage] = useState(
-        producto ? producto.portada : null
+        combo ? combo.productos[0].portada : null
     )
 
     useEffect(() => {
-        setSelectedImage(producto ? producto.portada : null)
-    }, [producto])
+        setSelectedImage(combo ? combo.productos[0].portada : null)
+    }, [combo])
 
-    const portada = producto?.portada || ''
-    const imagenesProducto =
-        producto?.imagenes?.length > 0
-            ? [portada, ...producto.imagenes]
-            : [portada]
+    const imagenesCombo =
+    combo?.productos?.length > 0
+            ? combo.productos.map(producto => producto.portada)
+            : null
 
     const elegirImagen = (imagen) => {
         setSelectedImage(imagen)
@@ -135,7 +140,7 @@ const ProductoImages = ({ producto }) => {
                     },
                 }}
             >
-                {imagenesProducto.map((imagen, index) => {
+                {imagenesCombo.map((imagen, index) => {
                     return (
                         <Miniatura
                             imagen={imagen}
@@ -147,7 +152,7 @@ const ProductoImages = ({ producto }) => {
                 })}
             </Box>
 
-            {imagenesProducto.map((imagen, index) => {
+            {imagenesCombo.map((imagen, index) => {
                 return (
                     <Box
                         sx={{
@@ -217,7 +222,7 @@ const Miniatura = ({ imagen, elegirImagen, index, selectedImage }) => {
     )
 }
 
-const Detalles = ({ producto }) => {
+const Detalles = ({ combo }) => {
     return (
         <Grid
             item
@@ -246,29 +251,14 @@ const Detalles = ({ producto }) => {
             >
                 <Typography sx={{ fontWeight: 'bold', fontSize: '2.15rem' }}>
                     {' '}
-                    {producto.name}
+                    {combo.name}
                 </Typography>
-                <Typography sx={{ fontSize: '1.15rem' }}>
-                    {producto.marca} | {producto.modelo}
-                </Typography>
-                <Typography sx={{ fontSize: '1.15rem' }}>
-                    Origen: {producto.origen}
-                </Typography>
-                {producto.estado_activo.estado === 'Disponible' ? (
+
+                
                     <Typography sx={{ fontWeight: 'bold', fontSize: '2rem' }}>
-                        {producto.moneda.name} {producto.precio}
+                        {combo.moneda.name} {combo.precio}
                     </Typography>
-                ) : (
-                    <Typography
-                        sx={{
-                            fontWeight: 'bold',
-                            color: 'red',
-                            fontSize: '3rem',
-                        }}
-                    >
-                        vendido
-                    </Typography>
-                )}
+                
                 <Button
                     sx={{
                         marginTop: '1.5rem',
@@ -295,11 +285,7 @@ const Detalles = ({ producto }) => {
 
                             '@media (max-width:600px)': { fontSize: '0.85rem' },
                         }}
-                    >
-                        {' '}
-                        {producto.estado_activo.estado === 'Disponible'
-                            ? '¡Lo quiero!'
-                            : 'Consultá por disponibilidad'}
+                    >Consultá por disponibilidad
                     </Typography>
                 </Button>
             </Box>
@@ -307,7 +293,7 @@ const Detalles = ({ producto }) => {
     )
 }
 
-const Caracteristicas = ({ producto }) => {
+const Caracteristicas = ({ combo }) => {
     const [selectedTab, setSelectedTab] = useState(1)
 
     const ChangeSelectedTab = (tab) => {
@@ -352,26 +338,9 @@ const Caracteristicas = ({ producto }) => {
                         borderTopRightRadius: '0.45rem',
                     }}
                 >
-                    {' '}
-                    Detalles{' '}
+                    Detalles
                 </Box>
-                {producto.caracteristicas.length > 0 && (
-                    <Box
-                        onClick={() => ChangeSelectedTab(2)}
-                        sx={{
-                            userSelect: 'none',
-                            width: 'fit-content',
-                            border: 2,
-                            fontWeight: selectedTab === 2 && 'bold',
-                            padding: '0.25rem',
-                            borderBottom: 'transparent',
-                            borderLeft: 'transparent',
-                            borderTopRightRadius: '0.45rem',
-                        }}
-                    >
-                        Caracteristicas
-                    </Box>
-                )}
+                
             </Box>
             <Box
                 sx={{
@@ -382,120 +351,15 @@ const Caracteristicas = ({ producto }) => {
                     height: '-webkit-fill-available',
                 }}
             >
-                {producto.descripcion}
-            </Box>
-            <Box
-                sx={{
-                    width: '100%',
-                    display: selectedTab === 2 ? 'flex' : 'none',
-                    flexDirection: 'column',
-                    height: '-webkit-fill-available',
-                }}
-            >
-                <List>
-                    {producto.caracteristicas.map((caracteristica) => {
-                        return (
-                            <ListItem>
-                                {' '}
-                                {caracteristica.caracteristica.name}:{' '}
-                                {caracteristica.valor}
-                            </ListItem>
-                        )
-                    })}
-                </List>
-            </Box>
+                {combo.descripcion}
+            </Box>    
         </Grid>
     )
 }
 
-const Similares = ({ producto }) => {
+const ProductosCombo = ({ combo }) => {
     const productos = useSelector((state) => state.productos)
-    const [selectedPage, setSelectedPage] = useState(0)
-
-    let productoSimilares = productos.filter((elemento) =>
-        elemento.tipos.some((tipo) => {
-            producto.tipos.some((e) => e.name === tipo.name)
-
-            return producto.tipos.some((e) => e.name === tipo.name)
-        })
-    )
-
-    productoSimilares = productoSimilares.filter(
-        (productoSimilar) => productoSimilar.id !== producto.id
-    )
-
-    if (productoSimilares.length < 5) {
-        let productosPorSubtipos = productos.filter((elemento) =>
-            elemento.subtipos.some((subtipo) => {
-                return producto.subtipos.some((e) => e.name === subtipo.name);
-            })
-        )
-
-        productosPorSubtipos = productosPorSubtipos.filter(
-            (productoPorSubtipos) => {
-                for (let index = 0; index < productoSimilares.length; index++) {
-                    const productoSimilar = productoSimilares[index];
-                    
-                    if (productoPorSubtipos.id === productoSimilar.id) {
-                        return false;
-                    }
-                    
-                    if (index === productoSimilares.length - 1) {
-                        return true;
-                    }
-                }
-            }
-        )
-
-        productosPorSubtipos = productosPorSubtipos.filter(
-            (productoPorSubtipos) => productoPorSubtipos.id !== producto.id
-        )
-
-        productoSimilares = productoSimilares.concat(productosPorSubtipos);
-
-    }
-
-    productoSimilares = productoSimilares.sort(
-        (elemento) => elemento.estado_activo.estado === 'Disponible'
-    )
-
-    if (productoSimilares.length < 5) {
-        //Si llega a 5 para relacionar llena con aleatorios
-
-        let productosDisponibles = productos.filter(
-            (producto) => producto.estado_activo.estado === 'Disponible'
-        )
-        productosDisponibles = productosDisponibles.filter(
-            (ProductoDisponible) => ProductoDisponible.id !== producto.id
-        )
-        if (productoSimilares.length > 0) {
-        productosDisponibles = productosDisponibles.filter(
-            (ProductoDisponible) => {
-                for (let index = 0; index < productoSimilares.length; index++) {
-                    const productoSimilar = productoSimilares[index];
-                    
-                    if (ProductoDisponible.id === productoSimilar.id) {
-                        return false;
-                    }
-                    
-                    if (index === productoSimilares.length - 1) {
-                        return true;
-                    }
-                }
-            }
-        )
-    }
-        productosDisponibles = productosDisponibles.sort(
-            () => Math.random() - 0.5
-        )
-
-        const productosAleatorios = productosDisponibles.slice(0, 5)
-
-        productoSimilares = productoSimilares.concat(productosAleatorios)
-    }
-
-    productoSimilares = productoSimilares.slice(0, 5)
-
+    
     return (
         <Box
             sx={{
@@ -520,7 +384,7 @@ const Similares = ({ producto }) => {
                     '@media (max-width:600px)': { fontSize: '1.25rem' },
                 }}
             >
-                Estos son otros productos que podrían interesarte
+                Podés comprar los productos por separado
             </Typography>
             <Grid
                 container
@@ -549,11 +413,10 @@ const Similares = ({ producto }) => {
                     },
                 }}
             >
-                {productos &&
-                    productoSimilares.map((producto) => (
-                        <ProductoSimilar
+                {combo &&
+                    combo.productos.map((producto) => (
+                        <ProductoCombo
                             producto={producto}
-                            selectedPage={selectedPage}
                         />
                     ))}
             </Grid>
@@ -561,7 +424,15 @@ const Similares = ({ producto }) => {
     )
 }
 
-const ProductoSimilar = ({ producto, selectedPage }) => {
+const ProductoCombo = ({ producto }) => {
+    const [monedasList, setMonedasList] = useState([])
+
+    useEffect(() => {
+               productosService
+            .getMonedas()
+            .then((response) => setMonedasList(response))
+    }, [])
+
     return (
         <>
             <Grid
@@ -571,8 +442,6 @@ const ProductoSimilar = ({ producto, selectedPage }) => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    transform: `translateX(${-16 * selectedPage}rem)`,
-                    transition: 'transform 0.5s ease-in-out', // Apply transition
                 }}
             >
                 <Paper
@@ -628,11 +497,11 @@ const ProductoSimilar = ({ producto, selectedPage }) => {
                                     },
                                 }}
                             >
-                                {producto.estado_activo.estado === 'Disponible'
-                                    ? producto.moneda.name +
+                                {monedasList.length > 0
+                                    && monedasList.filter(moneda => producto.moneda === moneda.id)[0].name +
                                       ' ' +
                                       Math.round(producto.precio * 100) / 100
-                                    : 'VENDIDO'}
+                                    }
                             </Typography>
 
                             <Typography
@@ -662,4 +531,4 @@ const ProductoSimilar = ({ producto, selectedPage }) => {
     )
 }
 
-export { Producto }
+export { Combo }

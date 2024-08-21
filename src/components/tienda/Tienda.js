@@ -20,6 +20,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import { useEffect, useState } from 'react'
 import productosService from '../../services/productos'
 import { Link } from 'react-router-dom'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import Drawer from '@mui/material/Drawer'
 
 const Tienda = () => {
     return (
@@ -82,12 +84,19 @@ const ProductosList = () => {
         })
     }
 
+    const [open, setOpen] = useState(false)
+
+    const toggleDrawer = (newOpen) => () => {
+        setOpen(newOpen)
+    }
+
     return (
         <Box
             sx={{
                 borderRadius: '0.5rem',
                 marginTop: '2rem',
                 paddingBottom: '2rem',
+                
             }}
         >
             <Typography
@@ -134,7 +143,13 @@ const ProductosList = () => {
                     item
                     xs={12}
                     md={2}
-                    sx={{ height: '100%', display: 'flex' }}
+                    sx={{
+                        height: '100%',
+                        display: 'flex',
+                        '@media (max-width:1300px)': {
+                            display: 'none',
+                        },
+                    }}
                 >
                     <Filtros
                         FilterMarcas={FilterMarcas}
@@ -144,6 +159,26 @@ const ProductosList = () => {
                     />
                 </Grid>
 
+                <Box sx={{ display: 'none',
+                            alignSelf:'flex-end',
+                            marginBottom:'1rem',
+                        '@media (max-width:1300px)': {
+                            display: 'flex',
+                        },}}>
+                    <IconButton onClick={toggleDrawer(true)}>
+                        <FilterListIcon/>
+                    </IconButton>
+                    <Drawer anchor = 'top' open={open} onClose={toggleDrawer(false)}>
+                        
+                        <Filtros
+                            FilterMarcas={FilterMarcas}
+                            filteredMarcas={filteredMarcas}
+                            FilterOrigenes={FilterOrigenes}
+                            filteredOrigenes={filteredOrigenes}
+                        />
+                    </Drawer>
+                </Box>
+
                 <Grid
                     item
                     xs={12}
@@ -152,6 +187,8 @@ const ProductosList = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        width: '100%',
+
                     }}
                 >
                     <Grid container spacing={1}>
@@ -202,6 +239,9 @@ const Filtros = ({
                 flexDirection: 'column',
                 borderColor: 'black',
                 borderWidth: '1rem',
+                '@media (max-width:1300px)': {
+                    flexDirection: 'row',                    
+                },
             }}
         >
             <Box
@@ -211,6 +251,9 @@ const Filtros = ({
                     flexDirection: 'column',
                     borderColor: 'black',
                     borderWidth: '1rem',
+                    '@media (max-width:1300px)': {
+                        padding:'1rem'
+                    }
                 }}
             >
                 <Typography sx={{ fontWeight: 'bold' }}>MARCAS</Typography>
@@ -238,6 +281,9 @@ const Filtros = ({
                     flexDirection: 'column',
                     borderColor: 'black',
                     borderWidth: '1rem',
+                    '@media (max-width:1300px)': {
+                        padding:'1rem'
+                    }
                 }}
             >
                 <Typography sx={{ fontWeight: 'bold' }}>ORIGENES</Typography>
@@ -485,11 +531,22 @@ const Combo = ({ combo }) => {
                         },
                     }}
                 >
-                    <img
-                        style={{ width: '100%', aspectRatio: 1 / 1 }}
-                        src={combo.productos[selectedProducto].portada}
-                        alt="nosotros"
-                    />
+                    {combo.productos.map((producto, index) => {
+                        return (
+                            <img
+                                style={{
+                                    width: '100%',
+                                    aspectRatio: 1 / 1,
+                                    display:
+                                        index === selectedProducto
+                                            ? 'flex'
+                                            : 'none',
+                                }}
+                                src={producto.portada}
+                                alt="nosotros"
+                            />
+                        )
+                    })}
                     <Box
                         sx={{
                             marginTop: '-6.5rem',
@@ -544,7 +601,6 @@ const Combo = ({ combo }) => {
                             },
                         }}
                     >
-                        
                         {combo.productos[selectedProducto].name.length < 21
                             ? combo.productos[selectedProducto].name
                             : combo.productos[selectedProducto].name.substring(
@@ -554,7 +610,7 @@ const Combo = ({ combo }) => {
                     </Box>
                 </Box>
                 <Link
-                    to={`/tienda/combos/${combo.id}`}
+                    to={`/tienda/combo/${combo.id}`}
                     style={{ textDecoration: 'none', color: 'black' }}
                 >
                     <Box

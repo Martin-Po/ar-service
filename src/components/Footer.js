@@ -16,6 +16,11 @@ const Navegacion = [
         link: '/tienda'
     },
     {
+        id: 5,
+        text: 'Preguntas frecuentes',
+        link: '/faqs'
+    },
+    {
         id: 3,
         text: 'Contacto',
         link: '/contacto'
@@ -24,11 +29,6 @@ const Navegacion = [
         id: 4,
         text: 'Quienes somos',
         link: '/nosotros'
-    },
-    {
-        id: 5,
-        text: 'Preguntas frecuentes',
-        link: '/faqs'
     },
 ]
 
