@@ -24,7 +24,7 @@ import tiposService from './services/tipos'
 import subtiposService from './services/subtipos'
 import loginService from './services/login'
 import caracteristicasxproducto from './services/caracteristicasxproducto'
-import { initializeProductos, setProductos } from './reducers/productosReducer'
+import { initializeProductos } from './reducers/productosReducer'
 import { PrivateRoutes } from './components/PrivateRoutes'
 import { NuevoProductoForm } from './components/admin/NuevoProductoForm'
 import { initializeCombos } from './reducers/combosReducer'
@@ -37,8 +37,6 @@ function App() {
     const dispatch = useDispatch()
 
     const loggeduser = useSelector((state) => state.loggeduser)
-    const productos = useSelector((state) => state.productos)
-    const combos = useSelector((state) => state.combos)
 
     const location = useLocation()
 
@@ -72,9 +70,7 @@ function App() {
             monedasService.setToken(null)
             tiposService.setToken(null)
             subtiposService.setToken(null)
-            console.log('borrando todo')
         } else {
-            console.log('seteando el token' + loggeduser.user.token)
             productosService.setToken(loggeduser.user.token)
             combosService.setToken(loggeduser.user.token)
             caracteristicasService.setToken(loggeduser.user.token)

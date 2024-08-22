@@ -1,16 +1,9 @@
 import {
     Box,
     Button,
-    Card,
-    CardActionArea,
-    CardMedia,
-    Checkbox,
-    Divider,
     Grid,
-    IconButton,
     List,
     ListItem,
-    ListItemText,
     Paper,
     Typography,
 } from '@mui/material'
@@ -129,15 +122,15 @@ const ProductoImages = ({ producto }) => {
                         width: '100%',
                         flexDirection: 'row',
                         flexWrap: 'nowrap',
-                        overflow:'hidden',
-                        overflowX:'scroll'
-
+                        overflow: 'hidden',
+                        overflowX: 'scroll',
                     },
                 }}
             >
                 {imagenesProducto.map((imagen, index) => {
                     return (
                         <Miniatura
+                            key={imagen + index}
                             imagen={imagen}
                             index={index}
                             elegirImagen={elegirImagen}
@@ -150,16 +143,17 @@ const ProductoImages = ({ producto }) => {
             {imagenesProducto.map((imagen, index) => {
                 return (
                     <Box
+                        key={imagen + index}
                         sx={{
                             display: selectedImage === imagen ? 'flex' : 'none',
                             flexDirection: 'column',
                             aling: 'center',
                             background: 'white',
-                            overflow:'hidden',
-                            height:'50vh',
-                            justifyContent:'center',
-                            width:'100%',
-                            flexWrap:'wrap',
+                            overflow: 'hidden',
+                            height: '50vh',
+                            justifyContent: 'center',
+                            width: '100%',
+                            flexWrap: 'wrap',
 
                             '@media (max-width:768px)': {
                                 padding: '0.5rem',
@@ -170,7 +164,7 @@ const ProductoImages = ({ producto }) => {
                             style={{
                                 maxWidth: '100%',
                                 maxHeight: '100%',
-                                aspectRatio:'auto'
+                                aspectRatio: 'auto',
                             }}
                             src={imagen}
                             alt="Imagen Seleccionada"
@@ -395,8 +389,7 @@ const Caracteristicas = ({ producto }) => {
                 <List>
                     {producto.caracteristicas.map((caracteristica) => {
                         return (
-                            <ListItem>
-                                {' '}
+                            <ListItem key={caracteristica.id}>
                                 {caracteristica.caracteristica.name}:{' '}
                                 {caracteristica.valor}
                             </ListItem>
@@ -410,7 +403,6 @@ const Caracteristicas = ({ producto }) => {
 
 const Similares = ({ producto }) => {
     const productos = useSelector((state) => state.productos)
-    const [selectedPage, setSelectedPage] = useState(0)
 
     let productoSimilares = productos.filter((elemento) =>
         elemento.tipos.some((tipo) => {
@@ -427,21 +419,21 @@ const Similares = ({ producto }) => {
     if (productoSimilares.length < 5) {
         let productosPorSubtipos = productos.filter((elemento) =>
             elemento.subtipos.some((subtipo) => {
-                return producto.subtipos.some((e) => e.name === subtipo.name);
+                return producto.subtipos.some((e) => e.name === subtipo.name)
             })
         )
 
         productosPorSubtipos = productosPorSubtipos.filter(
             (productoPorSubtipos) => {
                 for (let index = 0; index < productoSimilares.length; index++) {
-                    const productoSimilar = productoSimilares[index];
-                    
+                    const productoSimilar = productoSimilares[index]
+
                     if (productoPorSubtipos.id === productoSimilar.id) {
-                        return false;
+                        return false
                     }
-                    
+
                     if (index === productoSimilares.length - 1) {
-                        return true;
+                        return true
                     }
                 }
             }
@@ -451,8 +443,7 @@ const Similares = ({ producto }) => {
             (productoPorSubtipos) => productoPorSubtipos.id !== producto.id
         )
 
-        productoSimilares = productoSimilares.concat(productosPorSubtipos);
-
+        productoSimilares = productoSimilares.concat(productosPorSubtipos)
     }
 
     productoSimilares = productoSimilares.sort(
@@ -469,22 +460,26 @@ const Similares = ({ producto }) => {
             (ProductoDisponible) => ProductoDisponible.id !== producto.id
         )
         if (productoSimilares.length > 0) {
-        productosDisponibles = productosDisponibles.filter(
-            (ProductoDisponible) => {
-                for (let index = 0; index < productoSimilares.length; index++) {
-                    const productoSimilar = productoSimilares[index];
-                    
-                    if (ProductoDisponible.id === productoSimilar.id) {
-                        return false;
-                    }
-                    
-                    if (index === productoSimilares.length - 1) {
-                        return true;
+            productosDisponibles = productosDisponibles.filter(
+                (ProductoDisponible) => {
+                    for (
+                        let index = 0;
+                        index < productoSimilares.length;
+                        index++
+                    ) {
+                        const productoSimilar = productoSimilares[index]
+
+                        if (ProductoDisponible.id === productoSimilar.id) {
+                            return false
+                        }
+
+                        if (index === productoSimilares.length - 1) {
+                            return true
+                        }
                     }
                 }
-            }
-        )
-    }
+            )
+        }
         productosDisponibles = productosDisponibles.sort(
             () => Math.random() - 0.5
         )
@@ -552,8 +547,8 @@ const Similares = ({ producto }) => {
                 {productos &&
                     productoSimilares.map((producto) => (
                         <ProductoSimilar
+                            key={producto.id}
                             producto={producto}
-                            selectedPage={selectedPage}
                         />
                     ))}
             </Grid>
@@ -561,7 +556,7 @@ const Similares = ({ producto }) => {
     )
 }
 
-const ProductoSimilar = ({ producto, selectedPage }) => {
+const ProductoSimilar = ({ producto }) => {
     return (
         <>
             <Grid
@@ -571,8 +566,6 @@ const ProductoSimilar = ({ producto, selectedPage }) => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    transform: `translateX(${-16 * selectedPage}rem)`,
-                    transition: 'transform 0.5s ease-in-out', // Apply transition
                 }}
             >
                 <Paper

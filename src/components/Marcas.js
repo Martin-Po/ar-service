@@ -1,5 +1,4 @@
-import { Avatar, Box, Button, Grid, Paper, Typography } from '@mui/material'
-import BannerImage from '../assets/banner_image.png'
+import { Box, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react';
 
 

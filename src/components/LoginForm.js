@@ -1,18 +1,12 @@
 import { useDispatch } from 'react-redux'
 import { logIn } from '../reducers/loginuserReducer'
 import { useSelector } from 'react-redux'
-
 import Box from '@mui/material/Box'
 import { TextField, Button } from '@mui/material'
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
@@ -48,7 +42,7 @@ const loggeduser = useSelector(state => state.loggeduser)
         // Redireccionar a la página deseada después del inicio de sesión exitoso
         navigate('/admin/home');
       } catch (exception) {
-        console.log('Hubo un error durante el inicio de sesión', exception);
+        console.error('Hubo un error durante el inicio de sesión', exception);
       }
     };
 

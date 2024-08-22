@@ -1,19 +1,4 @@
-import {
-    Box,
-    Button,
-    Card,
-    CardActionArea,
-    CardMedia,
-    Checkbox,
-    Divider,
-    Grid,
-    IconButton,
-    List,
-    ListItem,
-    ListItemText,
-    Paper,
-    Typography,
-} from '@mui/material'
+import {Box, Checkbox, Grid, IconButton, List, ListItem, ListItemText, Paper, Typography} from '@mui/material'
 import { useSelector } from 'react-redux'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
@@ -204,7 +189,7 @@ const ProductosList = () => {
                                         'Disponible'
                                 )
                                 .map((producto) => (
-                                    <Producto producto={producto} />
+                                    <Producto key={producto.id} producto={producto} />
                                 ))}
                     </Grid>
                 </Grid>
@@ -260,7 +245,7 @@ const Filtros = ({
                 <List dense={true}>
                     {marcasList.map((marca) => {
                         return (
-                            <ListItem sx={{ paddingTop: '0', margin: '0' }}>
+                            <ListItem key={marca}   sx={{ paddingTop: '0', margin: '0' }}>
                                 <Checkbox
                                     sx={{ padding: '0', margin: '0' }}
                                     size="small"
@@ -290,7 +275,7 @@ const Filtros = ({
                 <List dense={true}>
                     {origenesList.map((origen) => {
                         return (
-                            <ListItem sx={{ paddingTop: '0', margin: '0' }}>
+                            <ListItem key={origen} sx={{ paddingTop: '0', margin: '0' }}>
                                 <Checkbox
                                     sx={{ padding: '0', margin: '0' }}
                                     size="small"
@@ -480,7 +465,7 @@ const CombosList = () => {
                 }}
             >
                 {combos.map((combo) => (
-                    <Combo combo={combo} />
+                    <Combo key={combo.id} combo={combo} />
                 ))}
             </Grid>
         </Box>
@@ -534,6 +519,7 @@ const Combo = ({ combo }) => {
                     {combo.productos.map((producto, index) => {
                         return (
                             <img
+                            key={producto.id}
                                 style={{
                                     width: '100%',
                                     aspectRatio: 1 / 1,
@@ -543,7 +529,7 @@ const Combo = ({ combo }) => {
                                             : 'none',
                                 }}
                                 src={producto.portada}
-                                alt="nosotros"
+                                alt= {"portada " + producto.name }
                             />
                         )
                     })}
@@ -729,7 +715,7 @@ const Vendidos = () => {
                                 producto.estado_activo.estado !== 'Disponible'
                         )
                         .map((producto) => (
-                            <ProductoVendido
+                            <ProductoVendido key={producto.id}
                                 producto={producto}
                                 selectedPage={selectedPage}
                             />

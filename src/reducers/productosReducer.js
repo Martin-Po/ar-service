@@ -46,8 +46,6 @@ const productoSlice = createSlice({
         },
         addCaracteristica(state, action) {
             const { producto_id, newCaracteristicas } = action.payload
-            console.log('en el dispatch');
-            console.log(newCaracteristicas);
 
             return state.map((producto) => {
                 if (producto.id === producto_id) {
@@ -78,7 +76,6 @@ const productoSlice = createSlice({
         appendObservacion(state, action) {
             const { producto_id, newObservacion } = action.payload
 
-            console.log(newObservacion);
             return state.map((producto) => {
                 if (producto.id === producto_id) {
                     return {
@@ -93,8 +90,6 @@ const productoSlice = createSlice({
         eraseObservacion(state, action) {
             const { producto_id, observacion_id } = action.payload
 
-            console.log(producto_id);
-            console.log(observacion_id);
             return state.map((producto) => {
                 if (producto.id === producto_id) {
                     return {
@@ -165,7 +160,6 @@ export const createProducto = (productoObject) => {
             const newproductoObject = { ...productoObject, subtipos: subtipos }
 
             const newProductoPopulated = await productoService.create(newproductoObject)
-            console.log('el producto se creo correctamente');
             dispatch(appendProducto(newProductoPopulated))
             return newProductoPopulated
         } catch (error) {
@@ -190,10 +184,6 @@ export const updateProducto = (productoId, NewName) => {
 export const updateEstado = (productoId, nuevoEstado) => {
     return async (dispatch) => {
         try {
-            console.log('dispatch1');
-            console.log(productoId);
-            console.log(nuevoEstado);
-            console.log('dispatch2');
             const newEstado = await productoService.updateEstado(productoId, {estado: nuevoEstado})
             dispatch(editarEstado({ productoId, estado: newEstado.estado_activo }))
         } catch (error) {
@@ -289,7 +279,6 @@ export const CreatePortada = (producto_id, portada) => {
             const newPortada = await productoService.addPortada(
                 producto_id,
                 portada)                
-                console.log('CreatePortada');
             dispatch(addPortada({ producto_id, newPortada}))
         } catch (error) {
             // Handle error
@@ -306,7 +295,6 @@ export const CreateImagenes = (producto_id, imagenes) => {
             const newImagenes = await productoService.addImagenes(
                 producto_id,
                 imagenes)
-                console.log('CreateImagenes');
             dispatch(addImagenes({ producto_id, newImagenes}))
         } catch (error) {
             // Handle error

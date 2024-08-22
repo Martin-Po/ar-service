@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid'
 import EmailIcon from '@mui/icons-material/Email'

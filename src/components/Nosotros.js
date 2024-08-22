@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import NosotrosImage from '../assets/nosotros_image.png'
 
 const Nosotros = () => {

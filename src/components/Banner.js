@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, Paper, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import BannerImage from '../assets/banner_image.png'
 import React from 'react'
 

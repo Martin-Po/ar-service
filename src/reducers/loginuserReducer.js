@@ -24,8 +24,6 @@ export const { setUser, eraseUser, setError } = loggedUserSlice.actions
 export const initializeLoggedUser = () => {
     return async (dispatch) => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
-        console.log('buscando en memoria');
-        console.log(loggedUserJSON);
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
             dispatch(setUser(user))
@@ -36,11 +34,8 @@ export const initializeLoggedUser = () => {
 
 export const CheckUser = () => {
     return async (dispatch) => {
-        console.log('haciendo el dispatch');
         try {
-            console.log('probando check2');
             await loginService.checkUser()
-            console.log('probando check4');
 
         } catch (error) {
             dispatch(

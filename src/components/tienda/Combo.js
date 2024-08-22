@@ -1,19 +1,4 @@
-import {
-    Box,
-    Button,
-    Card,
-    CardActionArea,
-    CardMedia,
-    Checkbox,
-    Divider,
-    Grid,
-    IconButton,
-    List,
-    ListItem,
-    ListItemText,
-    Paper,
-    Typography,
-} from '@mui/material'
+import { Box, Button, Grid, Paper, Typography } from '@mui/material'
 import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -24,10 +9,6 @@ const Combo = () => {
     const { id } = useParams()
     const combos = useSelector((state) => state.combos)
     const combo = combos.find((combo) => combo.id === id)
-    
-
-    const productos = useSelector((state) => state.productos)
-    const producto = productos.find((producto) => producto.id === id)
 
     return (
         <div
@@ -142,7 +123,7 @@ const ComboImages = ({ combo }) => {
             >
                 {imagenesCombo.map((imagen, index) => {
                     return (
-                        <Miniatura
+                        <Miniatura key={imagen + index}
                             imagen={imagen}
                             index={index}
                             elegirImagen={elegirImagen}
@@ -154,7 +135,7 @@ const ComboImages = ({ combo }) => {
 
             {imagenesCombo.map((imagen, index) => {
                 return (
-                    <Box
+                    <Box key={imagen + index}
                         sx={{
                             display: selectedImage === imagen ? 'flex' : 'none',
                             flexDirection: 'column',
@@ -285,7 +266,7 @@ const Detalles = ({ combo }) => {
 
                             '@media (max-width:600px)': { fontSize: '0.85rem' },
                         }}
-                    >Consultá por disponibilidad
+                    >Me interesa
                     </Typography>
                 </Button>
             </Box>
@@ -358,7 +339,6 @@ const Caracteristicas = ({ combo }) => {
 }
 
 const ProductosCombo = ({ combo }) => {
-    const productos = useSelector((state) => state.productos)
     
     return (
         <Box
@@ -415,7 +395,7 @@ const ProductosCombo = ({ combo }) => {
             >
                 {combo &&
                     combo.productos.map((producto) => (
-                        <ProductoCombo
+                        <ProductoCombo key={producto.id}
                             producto={producto}
                         />
                     ))}

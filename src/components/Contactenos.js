@@ -1,6 +1,4 @@
-import { Box, Button, Divider, Grid, Typography } from '@mui/material'
-import NosotrosImage from '../assets/nosotros_image.png'
-import { RedSocial } from './Contactos'
+import { Box, Divider, Typography } from '@mui/material'
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid'
 import EmailIcon from '@mui/icons-material/Email'
 import FacebookIcon from '@mui/icons-material/Facebook'
@@ -126,7 +124,7 @@ const Contactenos = () => {
                     sx={{
                         display: 'flex',
                         minHeight: '425px',
-                        justifyContent:'space-evenly',
+                        justifyContent: 'space-evenly',
                         '@media (max-width:1024px)': {
                             flexDirection: 'column',
                         },
@@ -144,7 +142,7 @@ const Contactenos = () => {
                             sx={{
                                 fontWeight: 'bold',
                                 fontSize: '1.5rem',
-                                marginBottom:'0.85rem',
+                                marginBottom: '0.85rem',
                                 '@media (max-width:600px)': {
                                     marginTop: '0.85rem',
                                 },
@@ -154,7 +152,7 @@ const Contactenos = () => {
                         </Typography>
                         {Horarios.map((horario, index) => {
                             return (
-                                <>
+                                <Box key={horario.id}>
                                     <Box
                                         sx={{
                                             display: 'flex',
@@ -173,7 +171,7 @@ const Contactenos = () => {
                                         >
                                             {horario.Horario.map((franja) => {
                                                 return (
-                                                    <Typography>
+                                                    <Typography key={franja}>
                                                         {franja}
                                                     </Typography>
                                                 )
@@ -188,7 +186,7 @@ const Contactenos = () => {
                                             flexItem
                                         />
                                     )}
-                                </>
+                                </Box>
                             )
                         })}
                     </Box>
@@ -207,7 +205,7 @@ const Contactenos = () => {
                             sx={{
                                 fontWeight: 'bold',
                                 fontSize: '1.5rem',
-                                marginBottom:'0.85rem',
+                                marginBottom: '0.85rem',
                                 '@media (max-width:600px)': {
                                     marginTop: '0.85rem',
                                 },
@@ -215,20 +213,25 @@ const Contactenos = () => {
                         >
                             Contactos
                         </Typography>
-                        <Typography sx={{
-                                            marginBottom:'0.85rem'
-
-                        }}>011 - 4775-6044</Typography>
-                        <Typography sx={{
-                                            marginBottom:'0.85rem'
-
-                        }}>
+                        <Typography
+                            sx={{
+                                marginBottom: '0.85rem',
+                            }}
+                        >
+                            011 - 4775-6044
+                        </Typography>
+                        <Typography
+                            sx={{
+                                marginBottom: '0.85rem',
+                            }}
+                        >
                             arservicepalermo@hotmail.com
                         </Typography>
-                        <Typography sx={{
-                                            marginBottom:'0.85rem'
-
-                        }}>
+                        <Typography
+                            sx={{
+                                marginBottom: '0.85rem',
+                            }}
+                        >
                             Paraguay 5101, CABA, Buenos Aires
                         </Typography>
                     </Box>
@@ -247,7 +250,7 @@ const Contactenos = () => {
                             sx={{
                                 fontWeight: 'bold',
                                 fontSize: '1.5rem',
-                                marginBottom:'0.85rem',
+                                marginBottom: '0.85rem',
 
                                 '@media (max-width:600px)': {
                                     marginTop: '0.85rem',
@@ -262,17 +265,18 @@ const Contactenos = () => {
 
                                 return (
                                     <Box
+                                        key={icono.id}
                                         sx={{
                                             display: 'flex',
                                             alignItems: 'center',
-                                            marginBottom:'1rem'
+                                            marginBottom: '1rem',
                                         }}
                                     >
                                         <a
                                             style={{
                                                 display: 'flex',
                                                 color: iconColors[icono.icon],
-                                                textDecoration:'none',
+                                                textDecoration: 'none',
                                             }}
                                             href={icono.url}
                                             target="_blank"
@@ -280,7 +284,7 @@ const Contactenos = () => {
                                         >
                                             {IconComponent && <IconComponent />}
 
-                                        {icono.text}
+                                            {icono.text}
                                         </a>
                                     </Box>
                                 )

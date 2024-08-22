@@ -53,7 +53,6 @@ export const createCombo = (comboObject) => {
         try {
 
             const newComboPopulated = await comboService.create(comboObject)
-            console.log('el combo se creo correctamente');
             dispatch(appendCombo(newComboPopulated))
             return newComboPopulated
         } catch (error) {

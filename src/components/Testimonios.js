@@ -1,5 +1,4 @@
-import { Avatar, Box, Grid, Paper, Typography } from '@mui/material'
-import ClientesImage from '../assets/testimonios/testimony_images.png'
+import { Avatar, Grid, Paper, Typography } from '@mui/material'
 import ClientAvatar1 from '../assets/testimonios/testimonial_avatar_1.png'
 import ClientAvatar2 from '../assets/testimonios/testimonial_avatar_2.png'
 import ClientAvatar3 from '../assets/testimonios/testimonial_avatar_3.png'
